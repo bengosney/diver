@@ -8,6 +8,4 @@
 [node name="MainLevel" parent="." instance=ExtResource( 1 )]
 
 [node name="Player" parent="." instance=ExtResource( 2 )]
-position = Vector2( 203, 74 )
-friction = 0.075
-acceleration = 0.065
+position = Vector2( 204, 74 )
