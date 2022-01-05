@@ -1,0 +1,14 @@
+[gd_scene format=2]
+
+[node name="HUD" type="CanvasLayer"]
+
+[node name="buoyancy" type="Label" parent="."]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -34.5
+margin_right = 34.5
+margin_bottom = 14.0
+text = "Buoyancy: "
+__meta__ = {
+"_edit_use_anchors_": false
+}
