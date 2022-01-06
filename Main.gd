@@ -1,14 +1,19 @@
 extends Node2D
 
-# Declare member variables here. Examples:
-# var a = 2
-# var b = "text"
 
-
-# Called when the node enters the scene tree for the first time.
 func _ready():
-	$HUD/buoyancy.text = "works"
+	var min_buoy = $Player.min_buoy - $Player.gravity
+	var max_buoy = $Player.max_buoy - $Player.gravity
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass
+	$HUD.setup(min_buoy, max_buoy, $Player.starting_air)
+
+
+func _process(_delta):
+	var buoyancy = $Player.buoyancy - $Player.gravity
+	$HUD.set_buoyancy(buoyancy)
+	$HUD.set_air($Player.air)
+
+
+func _on_HUD_reset():
+	print("reset")
+	$Player.reset()

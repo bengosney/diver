@@ -3,17 +3,25 @@ extends KinematicBody2D
 export(int) var speed = 100
 export(int) var jump_speed = -200
 export(int) var gravity = 800
-export(int) var buoyancy_step = 25
 
 export(float, 0, 1.0) var friction = 0.01
 export(float, 0, 1.0) var acceleration = 0.025
 export(float, 0, 1.0) var buoyancy_acc = 0.25
+export(float, 0, 1.0) var air_step = .1
+export(int) var starting_air = 100
 
 var velocity = Vector2.ZERO
 var minmax = 0.05
 var max_buoy = gravity * (1 + minmax)
 var min_buoy = gravity * (1 - (minmax * 2))
-var buoyancy = min_buoy
+var buoyancy_step = (max_buoy - min_buoy) / 15
+var buoyancy = gravity - (buoyancy_step * 2)
+
+var air = starting_air
+
+
+func reset():
+	air = starting_air
 
 
 func get_input():
@@ -39,6 +47,9 @@ func get_input():
 
 	if buoy != 0:
 		var target = buoyancy + (buoy * buoyancy_step)
+		if target > buoyancy:
+			air = air - air_step
+
 		buoyancy = lerp(buoyancy, max(min(target, max_buoy), min_buoy), buoyancy_acc)
 
 

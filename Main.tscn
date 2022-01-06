@@ -15,3 +15,5 @@ tile_data = PoolIntArray( -131072, 1, 131076, -131071, 1, 262145, -131070, 1, 26
 position = Vector2( 204, 74 )
 
 [node name="HUD" parent="." instance=ExtResource( 3 )]
+
+[connection signal="reset" from="HUD" to="." method="_on_HUD_reset"]
