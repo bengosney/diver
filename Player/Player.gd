@@ -20,6 +20,11 @@ var buoyancy = gravity - (buoyancy_step * 2)
 var air = starting_air
 
 
+func _ready():
+	$PlayerCamera.limit_smoothed = true
+	$PlayerCamera.reset_smoothing()
+
+
 func reset():
 	air = starting_air
 
