@@ -25,6 +25,13 @@ func _ready():
 	$PlayerCamera.reset_smoothing()
 
 
+func set_camera_extents(min_x, min_y, max_x, max_y):
+	$PlayerCamera.limit_top = min_y
+	$PlayerCamera.limit_left = min_x
+	$PlayerCamera.limit_right = max_x
+	$PlayerCamera.limit_bottom = max_y
+
+
 func reset():
 	air = starting_air
 

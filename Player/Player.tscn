@@ -61,10 +61,11 @@ mode = 2
 range_layer_min = -101
 range_layer_max = -1
 shadow_enabled = true
+shadow_filter = 5
+shadow_filter_smooth = 4.7
 
 [node name="PlayerCamera" type="Camera2D" parent="."]
 current = true
 limit_left = 0
 limit_top = 0
-limit_smoothed = true
 smoothing_enabled = true

@@ -30,4 +30,5 @@ position = Vector2( 204, 74 )
 
 [node name="HUD" parent="." instance=ExtResource( 3 )]
 
+[connection signal="change_extents" from="MainLevel" to="." method="_on_MainLevel_change_extents"]
 [connection signal="reset" from="HUD" to="." method="_on_HUD_reset"]
