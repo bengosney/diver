@@ -68,4 +68,6 @@ shadow_filter_smooth = 4.7
 current = true
 limit_left = 0
 limit_top = 0
+limit_right = 1632
+limit_bottom = 608
 smoothing_enabled = true

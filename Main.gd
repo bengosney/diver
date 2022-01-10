@@ -19,5 +19,5 @@ func _on_HUD_reset():
 	$Player.reset()
 
 
-func _on_MainLevel_change_extents(min_x, min_y, max_x, max_y):
-	$Player.set_camera_extents(min_x, min_y, max_x, max_y)
+func _on_MainLevel_change_extents(top, left, right, bottom):
+	$Player.set_camera_extents(top, left, right, bottom)

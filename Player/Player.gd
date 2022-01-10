@@ -25,15 +25,15 @@ func _ready():
 	$PlayerCamera.reset_smoothing()
 
 
-func set_camera_extents(min_x, min_y, max_x, max_y):
-	$PlayerCamera.limit_top = min_y
-	$PlayerCamera.limit_left = min_x
-	$PlayerCamera.limit_right = max_x
-	$PlayerCamera.limit_bottom = max_y
+func set_camera_extents(top, left, right, bottom):
+	$PlayerCamera.limit_top = top
+	$PlayerCamera.limit_left = left
+	$PlayerCamera.limit_right = right
+	$PlayerCamera.limit_bottom = bottom
 
 
 func reset():
-	air = starting_air
+	air = 0
 
 
 func get_input():
@@ -65,10 +65,18 @@ func get_input():
 		buoyancy = lerp(buoyancy, max(min(target, max_buoy), min_buoy), buoyancy_acc)
 
 
+func _process(delta):
+	if position.y <= 0 and air < starting_air:
+		var inc = ceil(starting_air - lerp(starting_air, air * .8, 1))
+		print(inc)
+		air += inc * delta
+		if air >= starting_air:
+			print("aired")
+
+
 func _physics_process(delta):
 	get_input()
 	velocity.y += (gravity - buoyancy) * delta
+	if position.y < 0:
+		velocity.y = abs(velocity.y) / 3
 	velocity = move_and_slide(velocity, Vector2.UP)
-	if Input.is_action_just_pressed("jump") and false:
-		if is_on_floor():
-			velocity.y = jump_speed

@@ -14,6 +14,7 @@ func setup(min_buoyancy, max_buoyancy, max_air):
 	$air_slider.min_value = 0
 	$air_slider.max_value = max_air
 	$air_slider.value = max_air
+	$air_slider.step = max_air / 1000
 
 
 func set_air(air):
