@@ -1,8 +1,42 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://MainLevel/MainLevel.tres" type="TileSet" id=1]
 
+[sub_resource type="CanvasItemMaterial" id=3]
+blend_mode = 3
+
+[sub_resource type="OpenSimplexNoise" id=1]
+
+[sub_resource type="NoiseTexture" id=2]
+width = 1024
+height = 1024
+seamless = true
+noise = SubResource( 1 )
+
 [node name="Node2D" type="Node2D"]
+
+[node name="Node2D" type="Node2D" parent="."]
+position = Vector2( -678, -603 )
+
+[node name="ColorRect" type="ColorRect" parent="Node2D"]
+margin_right = 2934.0
+margin_bottom = 1850.0
+color = Color( 0.0980392, 0.258824, 0.34902, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureRect" type="TextureRect" parent="Node2D"]
+material = SubResource( 3 )
+margin_left = 120.0
+margin_top = 92.0
+margin_right = 2815.0
+margin_bottom = 1762.0
+texture = SubResource( 2 )
+stretch_mode = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="MainLevel" type="TileMap" parent="."]
 position = Vector2( 1, 0 )
