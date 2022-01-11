@@ -33,7 +33,7 @@ func set_camera_extents(top, left, right, bottom):
 
 
 func reset():
-	air = 0
+	air = starting_air
 
 
 func get_input():
@@ -57,7 +57,7 @@ func get_input():
 	if Input.is_action_pressed("buoyancy_dec"):
 		buoy = -1
 
-	if buoy != 0:
+	if buoy != 0 and air > 0:
 		var target = buoyancy + (buoy * buoyancy_step)
 		if target > buoyancy:
 			air = air - air_step
@@ -66,12 +66,11 @@ func get_input():
 
 
 func _process(delta):
-	if position.y <= 0 and air < starting_air:
+	if position.y <= 0:
 		var inc = ceil(starting_air - lerp(starting_air, air * .8, 1))
-		print(inc)
-		air += inc * delta
-		if air >= starting_air:
-			print("aired")
+		air = max(air + (inc * delta), starting_air)
+
+	$BreathingBubbles.emitting = (position.y > 10)
 
 
 func _physics_process(delta):
