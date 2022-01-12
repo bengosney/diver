@@ -15,7 +15,7 @@ func calculate_bounds():
 	var limit_top = map_limits.position.y * map_cellsize.y
 	var limit_bottom = map_limits.end.y * map_cellsize.y
 
-	emit_signal("change_extents", limit_top - 250, limit_left, limit_right, limit_bottom)
+	emit_signal("change_extents", limit_top, limit_left, limit_right, limit_bottom)
 
 
 func calculate_boundsy():

@@ -66,16 +66,12 @@ func get_input():
 
 
 func _process(delta):
-	if position.y <= 0:
+	if false:
 		var inc = ceil(starting_air - lerp(starting_air, air * .8, 1))
 		air = max(air + (inc * delta), starting_air)
-
-	$BreathingBubbles.emitting = (position.y > 10)
 
 
 func _physics_process(delta):
 	get_input()
 	velocity.y += (gravity - buoyancy) * delta
-	if position.y < 0:
-		velocity.y = abs(velocity.y) / 3
 	velocity = move_and_slide(velocity, Vector2.UP)
