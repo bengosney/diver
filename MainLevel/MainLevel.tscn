@@ -61,4 +61,5 @@ __meta__ = {
 position = Vector2( 82, 16 )
 
 [node name="Crab" parent="." instance=ExtResource( 4 )]
-position = Vector2( 451, 364 )
+modulate = Color( 0.396078, 0.396078, 0.396078, 1 )
+position = Vector2( 450, 371 )
