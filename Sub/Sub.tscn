@@ -18,6 +18,7 @@ height = 32.0
 extents = Vector2( 6, 7 )
 
 [node name="Sub" type="StaticBody2D"]
+modulate = Color( 0.501961, 0.501961, 0.501961, 1 )
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 frames = SubResource( 1 )

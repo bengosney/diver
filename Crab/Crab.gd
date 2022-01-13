@@ -1,7 +1,7 @@
 extends KinematicBody2D
 
 export(int) var gravity = 800
-export(int) var buoyancy = 0
+export(int) var buoyancy = 600
 export(int) var speed = 50
 export(float, 0, 1.0) var acceleration = 0.25
 export(float, 0, 1.0) var friction = 0.01

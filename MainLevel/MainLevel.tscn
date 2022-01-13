@@ -1,9 +1,10 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://MainLevel/MainLevel.tres" type="TileSet" id=1]
 [ext_resource path="res://MainLevel/MainLevel.gd" type="Script" id=2]
 [ext_resource path="res://Sub/Sub.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Crab/Crab.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Chest/Chest.tscn" type="PackedScene" id=5]
 
 [sub_resource type="CanvasItemMaterial" id=3]
 blend_mode = 3
@@ -47,9 +48,9 @@ motion_scale = Vector2( -0.25, -0.25 )
 
 [node name="TextureRect" type="TextureRect" parent="ParallaxBackground/Fog1"]
 material = SubResource( 3 )
-margin_left = -678.0
+margin_left = -677.0
 margin_top = -561.0
-margin_right = 2017.0
+margin_right = 2018.0
 margin_bottom = 1109.0
 texture = SubResource( 2 )
 stretch_mode = 2
@@ -61,5 +62,11 @@ __meta__ = {
 position = Vector2( 82, 16 )
 
 [node name="Crab" parent="." instance=ExtResource( 4 )]
-modulate = Color( 0.396078, 0.396078, 0.396078, 1 )
-position = Vector2( 450, 371 )
+position = Vector2( 448, 366 )
+
+[node name="Crab2" parent="." instance=ExtResource( 4 )]
+position = Vector2( 294, 337 )
+
+[node name="Chest" parent="." instance=ExtResource( 5 )]
+position = Vector2( 42, 371 )
+scale = Vector2( 0.5, 0.5 )
