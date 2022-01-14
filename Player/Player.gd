@@ -19,11 +19,14 @@ var buoyancy = gravity - (buoyancy_step * 2)
 
 var air = starting_air
 
+var inital_position
+
 
 func _ready():
 	$PlayerCamera.limit_smoothed = true
 	$PlayerCamera.reset_smoothing()
 	move_and_collide(Vector2.DOWN * 100)
+	inital_position = position
 
 
 func set_camera_extents(top, left, right, bottom):
@@ -76,3 +79,9 @@ func _physics_process(delta):
 	get_input()
 	velocity.y += (gravity - buoyancy) * delta
 	velocity = move_and_slide(velocity, Vector2.UP)
+	#print(collide)
+	for i in get_slide_count():
+		var collision = get_slide_collision(i)
+		if collision.collider.is_in_group("enemies"):
+			print("Collided with: ", collision.collider.name)
+			#position = inital_position

@@ -26,11 +26,11 @@ frames = SubResource( 1 )
 light_mask = 0
 shape = SubResource( 2 )
 
-[node name="Light2D" type="Light2D" parent="."]
+[node name="Light2D" type="Light2D" parent="." groups=["pickup"]]
 texture = ExtResource( 3 )
-texture_scale = 0.25
-energy = 2.25
-mode = 2
+texture_scale = 0.35
+color = Color( 1, 1, 0.635294, 1 )
+energy = 1.5
 range_layer_min = -500
 range_layer_max = 3
 shadow_enabled = true

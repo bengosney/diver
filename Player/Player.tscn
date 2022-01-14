@@ -48,6 +48,7 @@ texture = ExtResource( 4 )
 light_mask = 2
 frames = SubResource( 1 )
 animation = "idle"
+frame = 1
 playing = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -58,8 +59,7 @@ shape = SubResource( 2 )
 [node name="Light2D" type="Light2D" parent="."]
 texture = ExtResource( 5 )
 texture_scale = 0.5
-energy = 2.25
-mode = 2
+energy = 1.5
 range_layer_min = -101
 range_layer_max = 100
 shadow_enabled = true
