@@ -30,17 +30,17 @@ frames = SubResource( 1 )
 frame = 1
 playing = true
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="Body" type="CollisionShape2D" parent="."]
 position = Vector2( 0, 11 )
 rotation = 1.5708
 shape = SubResource( 2 )
 
-[node name="CollisionShape2D2" type="CollisionShape2D" parent="."]
+[node name="Arm1" type="CollisionShape2D" parent="."]
 position = Vector2( -21, -15 )
 rotation = 0.546288
 shape = SubResource( 3 )
 
-[node name="CollisionShape2D3" type="CollisionShape2D" parent="."]
+[node name="Arm2" type="CollisionShape2D" parent="."]
 position = Vector2( 22, -15 )
 rotation = -0.656244
 shape = SubResource( 3 )

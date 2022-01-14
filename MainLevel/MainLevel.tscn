@@ -62,11 +62,11 @@ __meta__ = {
 position = Vector2( 82, 16 )
 
 [node name="Crab" parent="." instance=ExtResource( 4 )]
-position = Vector2( 448, 366 )
+position = Vector2( 447, 369 )
 
 [node name="Crab2" parent="." instance=ExtResource( 4 )]
-position = Vector2( 294, 337 )
+position = Vector2( 290, 322 )
 
 [node name="Chest" parent="." instance=ExtResource( 5 )]
-position = Vector2( 42, 371 )
+position = Vector2( 42, 370 )
 scale = Vector2( 0.5, 0.5 )

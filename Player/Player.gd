@@ -23,6 +23,7 @@ var air = starting_air
 func _ready():
 	$PlayerCamera.limit_smoothed = true
 	$PlayerCamera.reset_smoothing()
+	move_and_collide(Vector2.DOWN * 100)
 
 
 func set_camera_extents(top, left, right, bottom):

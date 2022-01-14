@@ -1,14 +1,15 @@
 extends StaticBody2D
 
-# Declare member variables here. Examples:
-# var a = 2
-# var b = "text"
 
-
-# Called when the node enters the scene tree for the first time.
 func _ready():
-	pass  # Replace with function body.
+	move_to_floor()
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass
+
+func move_to_floor():
+	var space_state = get_world_2d().direct_space_state
+
+	var offset = Vector2(0, -12)
+	var down = position + (Vector2.DOWN * 100)
+	var result = space_state.intersect_ray(position, down, [self])
+	if result:
+		position = result.position + offset
