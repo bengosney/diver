@@ -79,9 +79,3 @@ func _physics_process(delta):
 	get_input()
 	velocity.y += (gravity - buoyancy) * delta
 	velocity = move_and_slide(velocity, Vector2.UP)
-	#print(collide)
-	for i in get_slide_count():
-		var collision = get_slide_collision(i)
-		if collision.collider.is_in_group("enemies"):
-			print("Collided with: ", collision.collider.name)
-			#position = inital_position

@@ -1,10 +1,13 @@
 extends Node2D
 
 signal change_extents(top, left, right, bottom)
+signal hit_player(node)
 
 
 func _ready():
 	calculate_bounds()
+	for enemy in get_tree().get_nodes_in_group("enemies"):
+		enemy.connect("hit_player", self, "_hit_player")
 
 
 func calculate_bounds():
@@ -23,3 +26,8 @@ func calculate_boundsy():
 	var cell_size = $MainLevel.cell_size
 
 	emit_signal("change_extents", 0, 0, rect.end.x * cell_size.x, rect.end.y * cell_size.y)
+
+
+func _hit_player(node):
+	print(node.name, " collided with player")
+	emit_signal("hit_player", node)
