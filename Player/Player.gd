@@ -10,6 +10,8 @@ export(float, 0, 1.0) var buoyancy_acc = 0.25
 export(float, 0, 1.0) var air_step = .1
 export(int) var starting_air = 100
 
+export(PackedScene) var bubble_scene
+
 var velocity = Vector2.ZERO
 var minmax = 0.05
 var max_buoy = gravity * (1 + minmax)
@@ -84,6 +86,11 @@ func _physics_process(delta):
 
 func _on_MainLevel_hit_player(_node, dammage):
 	var leek = floor((starting_air / 100) * dammage)
-	$LeekBubbles.emitting = 1
-	$LeekBubbles.amount += dammage
+
+	var leek_instance = bubble_scene.instance()
+	leek_instance.amount = dammage
+	leek_instance.emitting = true
+	$Leeks.add_child(leek_instance)
+	#$LeekBubbles.emitting = 1
+	#$LeekBubbles.amount += dammage
 	print("new leek: ", leek)
