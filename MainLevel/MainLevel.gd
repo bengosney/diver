@@ -1,7 +1,7 @@
 extends Node2D
 
 signal change_extents(top, left, right, bottom)
-signal hit_player(node)
+signal hit_player(node, dammage)
 
 
 func _ready():
@@ -28,6 +28,6 @@ func calculate_boundsy():
 	emit_signal("change_extents", 0, 0, rect.end.x * cell_size.x, rect.end.y * cell_size.y)
 
 
-func _hit_player(node):
+func _hit_player(node, dammage):
 	print(node.name, " collided with player")
-	emit_signal("hit_player", node)
+	emit_signal("hit_player", node, dammage)

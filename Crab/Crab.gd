@@ -1,6 +1,6 @@
 extends KinematicBody2D
 
-signal hit_player(node)
+signal hit_player(node, dammage)
 
 export(int) var gravity = 800
 export(int) var buoyancy = 600
@@ -51,4 +51,4 @@ func _physics_process(delta):
 	for i in get_slide_count():
 		var collision = get_slide_collision(i)
 		if collision.collider.is_in_group("player"):
-			emit_signal("hit_player", self)
+			emit_signal("hit_player", self, 5)

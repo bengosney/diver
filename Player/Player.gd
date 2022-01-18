@@ -19,14 +19,13 @@ var buoyancy = gravity - (buoyancy_step * 2)
 
 var air = starting_air
 
-var inital_position
+var leaks = []
 
 
 func _ready():
 	$PlayerCamera.limit_smoothed = true
 	$PlayerCamera.reset_smoothing()
 	move_and_collide(Vector2.DOWN * 100)
-	inital_position = position
 
 
 func set_camera_extents(top, left, right, bottom):
@@ -61,6 +60,8 @@ func get_input():
 	if Input.is_action_pressed("buoyancy_dec"):
 		buoy = -1
 
+	$BuoyancyBubbles.emitting = (buoy == -1 && air > 0)
+
 	if buoy != 0 and air > 0:
 		var target = buoyancy + (buoy * buoyancy_step)
 		if target > buoyancy:
@@ -79,3 +80,10 @@ func _physics_process(delta):
 	get_input()
 	velocity.y += (gravity - buoyancy) * delta
 	velocity = move_and_slide(velocity, Vector2.UP)
+
+
+func _on_MainLevel_hit_player(_node, dammage):
+	var leek = floor((starting_air / 100) * dammage)
+	$LeekBubbles.emitting = 1
+	$LeekBubbles.amount += dammage
+	print("new leek: ", leek)

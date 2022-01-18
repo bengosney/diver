@@ -21,7 +21,6 @@ noise = SubResource( 1 )
 script = ExtResource( 2 )
 
 [node name="MainLevel" type="TileMap" parent="."]
-position = Vector2( -7, 0 )
 tile_set = ExtResource( 1 )
 cell_size = Vector2( 32, 32 )
 format = 1
