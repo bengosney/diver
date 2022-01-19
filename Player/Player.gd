@@ -84,13 +84,14 @@ func _physics_process(delta):
 	velocity = move_and_slide(velocity, Vector2.UP)
 
 
-func _on_MainLevel_hit_player(_node, dammage):
+func _on_MainLevel_hit_player(collision, dammage):
 	var leek = floor((starting_air / 100) * dammage)
 
 	var leek_instance = bubble_scene.instance()
+	var pos = collision.position - self.position
+
 	leek_instance.amount = dammage
 	leek_instance.emitting = true
+	leek_instance.position = pos
 	$Leeks.add_child(leek_instance)
-	#$LeekBubbles.emitting = 1
-	#$LeekBubbles.amount += dammage
 	print("new leek: ", leek)

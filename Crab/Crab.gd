@@ -10,6 +10,7 @@ export(float, 0, 1.0) var friction = 0.01
 
 var velocity = Vector2.ZERO
 var direction = "LEFT"
+var walking = true
 
 
 # Called when the node enters the scene tree for the first time.
@@ -25,7 +26,7 @@ func turn_around():
 
 
 func walk():
-	if not is_on_floor():
+	if not is_on_floor() or not walking:
 		return
 
 	if is_on_wall():
@@ -51,4 +52,6 @@ func _physics_process(delta):
 	for i in get_slide_count():
 		var collision = get_slide_collision(i)
 		if collision.collider.is_in_group("player"):
-			emit_signal("hit_player", self, 5)
+			print(collision)
+			emit_signal("hit_player", collision, 5)
+			#walking = false

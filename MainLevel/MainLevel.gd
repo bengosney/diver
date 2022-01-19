@@ -29,5 +29,4 @@ func calculate_boundsy():
 
 
 func _hit_player(node, dammage):
-	print(node.name, " collided with player")
 	emit_signal("hit_player", node, dammage)

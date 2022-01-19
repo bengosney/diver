@@ -23,3 +23,14 @@ local_coords = false
 draw_order = 1
 process_material = SubResource( 1 )
 texture = ExtResource( 1 )
+
+[node name="ColorRect" type="ColorRect" parent="."]
+visible = false
+margin_left = -3.0
+margin_top = -3.0
+margin_right = 3.0
+margin_bottom = 3.0
+color = Color( 0.505882, 0.00784314, 0.501961, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
