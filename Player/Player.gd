@@ -9,6 +9,8 @@ export(float, 0, 1.0) var acceleration = 0.025
 export(float, 0, 1.0) var buoyancy_acc = 0.25
 export(float, 0, 1.0) var air_step = .1
 export(int) var starting_air = 100
+export(float) var breath = 0.1
+export(float) var leek_factor = 0.25
 
 export(PackedScene) var bubble_scene
 
@@ -72,10 +74,22 @@ func get_input():
 		buoyancy = lerp(buoyancy, max(min(target, max_buoy), min_buoy), buoyancy_acc)
 
 
+func breath(delta):
+	air = max(0, air - (breath * delta))
+
+
+func leak(delta):
+	var total_leeks = 0
+	for l in leaks:
+		total_leeks += l
+
+	var leeked = (total_leeks * leek_factor) * delta
+	air = max(0, air - leeked)
+
+
 func _process(delta):
-	if false:
-		var inc = ceil(starting_air - lerp(starting_air, air * .8, 1))
-		air = max(air + (inc * delta), starting_air)
+	breath(delta)
+	leak(delta)
 
 
 func _physics_process(delta):
@@ -93,5 +107,5 @@ func _on_MainLevel_hit_player(collision, dammage):
 	leek_instance.amount = dammage
 	leek_instance.emitting = true
 	leek_instance.position = pos
+	leaks.append(dammage)
 	$Leeks.add_child(leek_instance)
-	print("new leek: ", leek)

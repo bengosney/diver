@@ -67,7 +67,7 @@ position = Vector2( 447, 369 )
 position = Vector2( 290, 322 )
 
 [node name="Crab3" parent="." instance=ExtResource( 4 )]
-position = Vector2( 279, 106 )
+position = Vector2( 118, 95 )
 
 [node name="Chest" parent="." instance=ExtResource( 5 )]
 position = Vector2( 42, 370 )
