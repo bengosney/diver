@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://HUD/HUD.gd" type="Script" id=1]
+[ext_resource path="res://Gauge/Gauge.tscn" type="PackedScene" id=2]
 
 [node name="HUD" type="CanvasLayer"]
 script = ExtResource( 1 )
@@ -43,5 +44,17 @@ text = "Reset Air"
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="Air" parent="." instance=ExtResource( 2 )]
+margin_left = 838.0
+margin_top = 416.0
+margin_right = -122.0
+margin_bottom = -120.0
+
+[node name="Buoyancy" parent="." instance=ExtResource( 2 )]
+margin_left = 838.0
+margin_top = 489.0
+margin_right = -122.0
+margin_bottom = -47.0
 
 [connection signal="pressed" from="reset_button" to="." method="_on_reset_button_pressed"]
