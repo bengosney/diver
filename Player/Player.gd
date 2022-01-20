@@ -84,7 +84,7 @@ func leak(delta):
 		total_leeks += l
 
 	var leeked = (total_leeks * leek_factor) * delta
-	air = max(0, air - leeked)
+	buoyancy = max(0, buoyancy - leeked)
 
 
 func _process(delta):
