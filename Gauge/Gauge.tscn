@@ -20,14 +20,24 @@ animations = [ {
 "speed": 5.0
 } ]
 
-[node name="Gauge" type="Control"]
+[node name="Gauge" type="CenterContainer"]
+margin_right = 64.0
+margin_bottom = 64.0
+rect_min_size = Vector2( 64, 64 )
 script = ExtResource( 3 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Background" type="AnimatedSprite" parent="."]
+[node name="Container" type="Control" parent="."]
+margin_right = 64.0
+margin_bottom = 64.0
+rect_min_size = Vector2( 64, 64 )
+
+[node name="Background" type="AnimatedSprite" parent="Container"]
+position = Vector2( 32, 32 )
 frames = SubResource( 1 )
 
-[node name="Needle" type="AnimatedSprite" parent="."]
+[node name="Needle" type="AnimatedSprite" parent="Container"]
+position = Vector2( 32, 32 )
 frames = SubResource( 2 )

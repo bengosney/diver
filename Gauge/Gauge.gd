@@ -13,7 +13,7 @@ func _get_mapped_value():
 
 
 func move():
-	$Needle.rotation_degrees = max(_min, min(_max, _get_mapped_value()))
+	$Container/Needle.rotation_degrees = max(_min, min(_max, _get_mapped_value()))
 
 
 func _ready():

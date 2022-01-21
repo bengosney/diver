@@ -4,17 +4,17 @@ signal reset
 
 
 func set_buoyancy(buoyancy):
-	$Buoyancy.set_value(buoyancy)
+	$Container/Buoyancy.set_value(buoyancy)
 
 
 func setup(min_buoyancy, max_buoyancy, max_air):
-	$Air.set_max(max_air)
-	$Buoyancy.set_min(min_buoyancy)
-	$Buoyancy.set_max(max_buoyancy)
+	$Container/Air.set_max(max_air)
+	$Container/Buoyancy.set_min(min_buoyancy)
+	$Container/Buoyancy.set_max(max_buoyancy)
 
 
 func set_air(air):
-	$Air.set_value(air)
+	$Container/Air.set_value(air)
 
 
 func _on_reset_button_pressed():

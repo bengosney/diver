@@ -26,41 +26,50 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Air" parent="." instance=ExtResource( 2 )]
-margin_left = 968.0
-margin_top = 469.0
-margin_right = 968.0
-margin_bottom = 469.0
+[node name="Container" type="VBoxContainer" parent="."]
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -64.0
+alignment = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
-[node name="Buoyancy" parent="." instance=ExtResource( 2 )]
-margin_left = 970.0
-margin_top = 563.0
-margin_right = 970.0
-margin_bottom = 563.0
-
-[node name="AirLabel" type="RichTextLabel" parent="."]
-margin_left = 957.0
-margin_top = 402.0
-margin_right = 1107.0
-margin_bottom = 452.0
+[node name="AirLabel" type="RichTextLabel" parent="Container"]
+margin_top = 406.0
+margin_right = 64.0
+margin_bottom = 433.0
 rect_clip_content = false
 theme = SubResource( 2 )
+bbcode_enabled = true
+bbcode_text = "[center]Air[/center]"
 text = "Air"
+fit_content_height = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="BuoyancyLabel" type="RichTextLabel" parent="."]
-margin_left = 924.0
-margin_top = 498.0
-margin_right = 1164.0
-margin_bottom = 553.0
+[node name="Air" parent="Container" instance=ExtResource( 2 )]
+margin_top = 437.0
+margin_bottom = 501.0
+
+[node name="BuoyancyLabel" type="RichTextLabel" parent="Container"]
+margin_top = 505.0
+margin_right = 64.0
+margin_bottom = 532.0
 rect_clip_content = false
 theme = SubResource( 2 )
-text = "Buoyancy
-"
+bbcode_enabled = true
+bbcode_text = "[center]Suit[/center]"
+text = "Suit"
+fit_content_height = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="Buoyancy" parent="Container" instance=ExtResource( 2 )]
+margin_top = 536.0
+margin_bottom = 600.0
 
 [connection signal="pressed" from="reset_button" to="." method="_on_reset_button_pressed"]
