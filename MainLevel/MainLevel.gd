@@ -2,12 +2,26 @@ extends Node2D
 
 signal change_extents(top, left, right, bottom)
 signal hit_player(node, dammage)
+signal pickup
+
+var pickups_total = 0
+var pickups_collected = 0
+
+var won = false
 
 
 func _ready():
 	calculate_bounds()
 	for enemy in get_tree().get_nodes_in_group("enemies"):
 		enemy.connect("hit_player", self, "_hit_player")
+
+	for pickup in get_tree().get_nodes_in_group("pickups"):
+		pickups_total += 1
+		pickup.connect("pickup", self, "_pickup")
+
+
+func _pickup():
+	pickups_collected += 1
 
 
 func calculate_bounds():
@@ -30,3 +44,7 @@ func calculate_boundsy():
 
 func _hit_player(node, dammage):
 	emit_signal("hit_player", node, dammage)
+
+
+func _on_Sub_player_entered():
+	won = pickups_collected >= pickups_total

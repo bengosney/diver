@@ -60,15 +60,37 @@ __meta__ = {
 [node name="Sub" parent="." instance=ExtResource( 3 )]
 position = Vector2( 82, 16 )
 
-[node name="Crab" parent="." instance=ExtResource( 4 )]
+[node name="PickUps" type="Node2D" parent="."]
+
+[node name="Chest" parent="PickUps" instance=ExtResource( 5 )]
+position = Vector2( 49, 369 )
+scale = Vector2( 0.5, 0.5 )
+
+[node name="Chest2" parent="PickUps" instance=ExtResource( 5 )]
+position = Vector2( 53, 111 )
+scale = Vector2( 0.5, 0.5 )
+
+[node name="Chest3" parent="PickUps" instance=ExtResource( 5 )]
+position = Vector2( 147, 238 )
+scale = Vector2( 0.5, 0.5 )
+
+[node name="Chest4" parent="PickUps" instance=ExtResource( 5 )]
+position = Vector2( 971, 207 )
+scale = Vector2( 0.5, 0.5 )
+
+[node name="Chest5" parent="PickUps" instance=ExtResource( 5 )]
+position = Vector2( 1480, 555 )
+scale = Vector2( 0.5, 0.5 )
+
+[node name="Enemies" type="Node2D" parent="."]
+
+[node name="Crab" parent="Enemies" instance=ExtResource( 4 )]
 position = Vector2( 447, 369 )
 
-[node name="Crab2" parent="." instance=ExtResource( 4 )]
+[node name="Crab2" parent="Enemies" instance=ExtResource( 4 )]
 position = Vector2( 290, 322 )
 
-[node name="Crab3" parent="." instance=ExtResource( 4 )]
-position = Vector2( 118, 95 )
+[node name="Crab3" parent="Enemies" instance=ExtResource( 4 )]
+position = Vector2( 304, 108 )
 
-[node name="Chest" parent="." instance=ExtResource( 5 )]
-position = Vector2( 42, 370 )
-scale = Vector2( 0.5, 0.5 )
+[connection signal="player_entered" from="Sub" to="." method="_on_Sub_player_entered"]

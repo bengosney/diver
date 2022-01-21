@@ -12,6 +12,8 @@ func _process(_delta):
 	var buoyancy = $Player.buoyancy - $Player.gravity
 	$HUD.set_buoyancy(buoyancy)
 	$HUD.set_air($Player.air)
+	$HUD.set_pickups($MainLevel.pickups_collected, $MainLevel.pickups_total)
+	$HUD.set_won($MainLevel.won)
 
 
 func _on_HUD_reset():

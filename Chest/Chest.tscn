@@ -15,7 +15,7 @@ animations = [ {
 [sub_resource type="RectangleShape2D" id=2]
 extents = Vector2( 28, 24 )
 
-[node name="Chest" type="StaticBody2D" groups=["items"]]
+[node name="Chest" type="Area2D" groups=["items", "pickups"]]
 modulate = Color( 0.427451, 0.427451, 0.427451, 1 )
 script = ExtResource( 2 )
 
@@ -34,3 +34,6 @@ energy = 1.5
 range_layer_min = -500
 range_layer_max = 3
 shadow_enabled = true
+
+[connection signal="area_entered" from="." to="." method="_on_Chest_area_entered"]
+[connection signal="body_entered" from="." to="." method="_on_Chest_body_entered"]

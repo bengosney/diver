@@ -1,21 +1,26 @@
 extends CanvasLayer
 
-signal reset
-
 
 func set_buoyancy(buoyancy):
-	$Container/Buoyancy.set_value(buoyancy)
+	$GaugeContainer/Buoyancy.set_value(buoyancy)
 
 
 func setup(min_buoyancy, max_buoyancy, max_air):
-	$Container/Air.set_max(max_air)
-	$Container/Buoyancy.set_min(min_buoyancy)
-	$Container/Buoyancy.set_max(max_buoyancy)
+	$GaugeContainer/Air.set_max(max_air)
+	$GaugeContainer/Buoyancy.set_min(min_buoyancy)
+	$GaugeContainer/Buoyancy.set_max(max_buoyancy)
 
 
 func set_air(air):
-	$Container/Air.set_value(air)
+	$GaugeContainer/Air.set_value(air)
 
 
-func _on_reset_button_pressed():
-	emit_signal("reset")
+func set_pickups(collected, total):
+	$Pickups.text = "Pickups: " + str(collected) + " of " + str(total)
+
+
+func set_won(won):
+	if won:
+		$WonText.visible_characters = -1
+	else:
+		$WonText.visible_characters = 0

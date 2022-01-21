@@ -30,7 +30,7 @@ animations = [ {
 radius = 15.0
 height = 28.0
 
-[node name="Player" type="KinematicBody2D"]
+[node name="Player" type="KinematicBody2D" groups=["player"]]
 script = ExtResource( 3 )
 
 [node name="BreathingBubbles" type="Particles2D" parent="."]

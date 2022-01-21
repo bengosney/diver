@@ -1,4 +1,6 @@
-extends StaticBody2D
+extends Area2D
+
+signal pickup
 
 
 func _ready():
@@ -13,3 +15,9 @@ func move_to_floor():
 	var result = space_state.intersect_ray(position, down, [self])
 	if result:
 		position = result.position + offset
+
+
+func _on_Chest_body_entered(body):
+	if body.is_in_group("player"):
+		emit_signal("pickup")
+		queue_free()
