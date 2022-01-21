@@ -107,6 +107,7 @@ position = Vector2( 447, 369 )
 
 [node name="Crab2" parent="Enemies" instance=ExtResource( 4 )]
 position = Vector2( 290, 322 )
+walk_off = true
 
 [node name="Crab3" parent="Enemies" instance=ExtResource( 4 )]
 position = Vector2( 368, 95 )
