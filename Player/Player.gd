@@ -11,6 +11,7 @@ export(float, 0, 1.0) var air_step = .1
 export(int) var starting_air = 100
 export(float) var breath = 0.1
 export(float) var leek_factor = 0.25
+export(float) var hit_timeout = 0.25
 
 export(PackedScene) var bubble_scene
 
@@ -23,6 +24,7 @@ var buoyancy = gravity - (buoyancy_step * 2)
 
 var air = starting_air
 
+var can_be_hit = true
 var leaks = []
 
 
@@ -30,6 +32,7 @@ func _ready():
 	$PlayerCamera.limit_smoothed = true
 	$PlayerCamera.reset_smoothing()
 	move_and_collide(Vector2.DOWN * 100)
+	$HitTimer.wait_time = hit_timeout
 
 
 func set_camera_extents(top, left, right, bottom):
@@ -101,6 +104,10 @@ func _physics_process(delta):
 
 
 func _on_MainLevel_hit_player(collision, dammage):
+	if not can_be_hit:
+		return
+
+	can_be_hit = false
 	var leek = floor((starting_air / 100) * dammage)
 
 	var leek_instance = bubble_scene.instance()
@@ -111,3 +118,9 @@ func _on_MainLevel_hit_player(collision, dammage):
 	leek_instance.position = pos
 	leaks.append(dammage)
 	$Leeks.add_child(leek_instance)
+	$HitTimer.start()
+
+
+func _on_HitTimer_timeout():
+	can_be_hit = true
+	print("Can be hit")
