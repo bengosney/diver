@@ -2,29 +2,34 @@ extends KinematicBody2D
 
 signal hit_player(node, dammage)
 
-export(int) var gravity = 800
-export(int) var buoyancy = 600
-export(int) var speed = 50
-export(float, 0, 1.0) var acceleration = 0.25
-export(float, 0, 1.0) var friction = 0.01
+enum Directions { LEFT, RIGHT }
 
 export(bool) var walk_off = false
+export(bool) var start_on_floor = true
+export(Directions) var starting_direction = Directions.LEFT
+
+var gravity = 800
+var buoyancy = 600
+var speed = 50
+var acceleration = 0.25
+var friction = 0.01
 
 var velocity = Vector2.ZERO
-var direction = "LEFT"
+var direction = Directions.LEFT
 var walking = true
 
 
-# Called when the node enters the scene tree for the first time.
 func _ready():
-	move_and_collide(Vector2.DOWN * 100)
+	direction = starting_direction
+	if start_on_floor:
+		var found_floor = move_and_collide(Vector2.DOWN * 100)
 
 
 func turn_around():
-	if direction == "LEFT":
-		direction = "RIGHT"
+	if direction == Directions.LEFT:
+		direction = Directions.RIGHT
 	else:
-		direction = "LEFT"
+		direction = Directions.LEFT
 
 
 func is_on_edge():
@@ -35,7 +40,7 @@ func is_on_edge():
 
 	var space_state = get_world_2d().direct_space_state
 	var test
-	if direction == "RIGHT":
+	if direction == Directions.RIGHT:
 		test = $Body.global_position + offset
 	else:
 		test = $Body.global_position - offset
@@ -59,9 +64,9 @@ func walk():
 		turn_around()
 
 	var dir = 0
-	if direction == "LEFT":
+	if direction == Directions.LEFT:
 		dir -= 1
-	if direction == "RIGHT":
+	if direction == Directions.RIGHT:
 		dir += 1
 
 	if dir != 0:
