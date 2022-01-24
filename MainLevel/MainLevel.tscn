@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://MainLevel/MainLevel.tres" type="TileSet" id=1]
 [ext_resource path="res://MainLevel/MainLevel.gd" type="Script" id=2]
@@ -6,6 +6,7 @@
 [ext_resource path="res://Crab/Crab.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Chest/Chest.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Grass/Grass.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Puffer/Puffer.tscn" type="PackedScene" id=7]
 
 [sub_resource type="CanvasItemMaterial" id=3]
 blend_mode = 3
@@ -111,5 +112,8 @@ walk_off = true
 
 [node name="Crab3" parent="Enemies" instance=ExtResource( 4 )]
 position = Vector2( 368, 95 )
+
+[node name="Puffer" parent="Enemies" groups=["enemies"] instance=ExtResource( 7 )]
+position = Vector2( 355, 42 )
 
 [connection signal="player_entered" from="Sub" to="." method="_on_Sub_player_entered"]
