@@ -123,4 +123,3 @@ func _on_MainLevel_hit_player(collision, dammage):
 
 func _on_HitTimer_timeout():
 	can_be_hit = true
-	print("Can be hit")
