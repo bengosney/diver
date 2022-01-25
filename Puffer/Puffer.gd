@@ -25,16 +25,20 @@ func _ready():
 	direction = starting_direction
 	_set_sprite_flip()
 	players = get_tree().get_nodes_in_group("player")
-	var distance = view_angle / 2
-	var poly = PoolVector2Array(
-		[Vector2(0, 0), Vector2(view_distance, -distance), Vector2(view_distance, distance)]
-	)
-	$View/ViewCone.set_polygon(poly)
-	$Polygon2D.set_polygon(poly)
+	set_view_cone()
 
 
 func _set_sprite_flip():
 	$AnimatedSprite.set_flip_h(direction == Directions.LEFT)
+
+
+func set_view_cone():
+	var x = view_distance
+	if direction == Directions.LEFT:
+		x = -x
+	var y = view_angle / 2
+	var poly = PoolVector2Array([Vector2(0, 0), Vector2(x, -y), Vector2(x, y)])
+	$View/ViewCone.set_polygon(poly)
 
 
 func turn_around():
@@ -44,10 +48,11 @@ func turn_around():
 		direction = Directions.LEFT
 
 	_set_sprite_flip()
+	set_view_cone()
 
 
 func swim():
-	if is_on_wall():
+	if is_on_wall() and not puffed:
 		turn_around()
 
 	var dir = 0
