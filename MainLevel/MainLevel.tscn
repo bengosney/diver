@@ -49,9 +49,9 @@ motion_scale = Vector2( -0.25, -0.25 )
 
 [node name="TextureRect" type="TextureRect" parent="ParallaxBackground/Fog1"]
 material = SubResource( 3 )
-margin_left = -677.0
+margin_left = -672.0
 margin_top = -561.0
-margin_right = 2018.0
+margin_right = 2023.0
 margin_bottom = 1109.0
 texture = SubResource( 2 )
 stretch_mode = 2
@@ -114,6 +114,6 @@ walk_off = true
 position = Vector2( 368, 95 )
 
 [node name="Puffer" parent="Enemies" groups=["enemies"] instance=ExtResource( 7 )]
-position = Vector2( 355, 42 )
+position = Vector2( 60, 89 )
 
 [connection signal="player_entered" from="Sub" to="." method="_on_Sub_player_entered"]

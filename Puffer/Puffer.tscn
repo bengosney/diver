@@ -21,6 +21,9 @@ modulate = Color( 0.286275, 0.286275, 0.286275, 1 )
 scale = Vector2( 0.5, 0.5 )
 script = ExtResource( 3 )
 
+[node name="Roated" type="Node2D" parent="."]
+rotation = 3.14159
+
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 frames = SubResource( 1 )
 
