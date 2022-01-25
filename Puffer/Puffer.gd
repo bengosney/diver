@@ -5,7 +5,7 @@ signal hit_player(node, dammage)
 enum Directions { LEFT, RIGHT }
 
 export(Directions) var starting_direction = Directions.LEFT
-export(int) var view_distance = 50
+export(int) var view_distance = 75
 export(float) var view_angle = 100
 
 var gravity = 800
@@ -25,29 +25,12 @@ func _ready():
 	direction = starting_direction
 	_set_sprite_flip()
 	players = get_tree().get_nodes_in_group("player")
-	check_should_puff()
-
-
-func draw_view_cone():
-	var thing = view_angle / 2
-
-
-func check_should_puff():
-	for player in players:
-		var dist = position.distance_to(player.get_global_position())
-		if dist > view_distance:
-			continue
-
-		var deg = rad2deg(get_angle_to(player.get_global_position()))
-
-		var to = view_angle / 2
-		var from = -to
-
-		if deg > min(to, from) and deg < max(to, from):
-			puffed = true
-			return
-
-	puffed = false
+	var distance = view_angle / 2
+	var poly = PoolVector2Array(
+		[Vector2(0, 0), Vector2(view_distance, -distance), Vector2(view_distance, distance)]
+	)
+	$View/ViewCone.set_polygon(poly)
+	$Polygon2D.set_polygon(poly)
 
 
 func _set_sprite_flip():
@@ -80,7 +63,6 @@ func swim():
 
 
 func _process(_delta):
-	check_should_puff()
 	if puffed:
 		$AnimatedSprite.frame = 1
 	else:
@@ -96,3 +78,13 @@ func _physics_process(delta):
 		var collision = get_slide_collision(i)
 		if collision.collider.is_in_group("player"):
 			emit_signal("hit_player", collision, 5)
+
+
+func _on_View_body_entered(body):
+	if body.is_in_group("player"):
+		puffed = true
+
+
+func _on_View_body_exited(body):
+	if body.is_in_group("player"):
+		puffed = false
