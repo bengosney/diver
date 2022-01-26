@@ -16,7 +16,7 @@ animations = [ {
 radius = 25.0
 height = 12.0
 
-[node name="Puffer" type="KinematicBody2D"]
+[node name="Puffer" type="KinematicBody2D" groups=["bouncy", "enemies"]]
 modulate = Color( 0.286275, 0.286275, 0.286275, 1 )
 scale = Vector2( 0.5, 0.5 )
 script = ExtResource( 3 )

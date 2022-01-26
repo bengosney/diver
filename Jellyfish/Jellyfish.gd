@@ -15,6 +15,5 @@ func _on_Timer_timeout():
 	var diff = position.y - starting_position.y
 	if diff > 0:
 		var rel = position - starting_position
-		var dir = -rel.normalized()
-		print("swim ", dir)
+		var dir = (-rel.normalized()) * 2
 		apply_central_impulse(dir)

@@ -100,7 +100,15 @@ func _process(delta):
 func _physics_process(delta):
 	get_input()
 	velocity.y += (gravity - buoyancy) * delta
-	velocity = move_and_slide(velocity, Vector2.UP)
+	velocity = move_and_slide(velocity, Vector2.UP, false, 4, PI / 4, false)
+
+	var push = 1
+
+	for index in get_slide_count():
+		var collision = get_slide_collision(index)
+		if collision.collider.is_in_group("bouncy"):
+			var dir = -position.direction_to(collision.collider.position).normalized()
+			velocity = velocity + (dir * 25)
 
 
 func _on_MainLevel_hit_player(collision, dammage):

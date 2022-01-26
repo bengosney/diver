@@ -77,7 +77,7 @@ func walk():
 
 func _physics_process(delta):
 	velocity.y += (gravity - buoyancy) * delta
-	velocity = move_and_slide(velocity, Vector2.UP)
+	velocity = move_and_slide(velocity, Vector2.UP, false, 4, PI / 4, false)
 	walk()
 
 	for i in get_slide_count():
