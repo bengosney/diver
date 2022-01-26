@@ -21,6 +21,8 @@ modulate = Color( 0.286275, 0.286275, 0.286275, 1 )
 mode = 2
 mass = 0.0816327
 gravity_scale = 0.1
+contacts_reported = 5
+contact_monitor = true
 script = ExtResource( 4 )
 
 [node name="body" type="CollisionShape2D" parent="."]
@@ -29,7 +31,7 @@ shape = SubResource( 2 )
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 scale = Vector2( 0.5, 0.5 )
 frames = SubResource( 1 )
-frame = 2
+frame = 1
 playing = true
 
 [node name="Timer" type="Timer" parent="."]

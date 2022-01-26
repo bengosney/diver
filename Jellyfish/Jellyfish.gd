@@ -17,3 +17,11 @@ func _on_Timer_timeout():
 		var rel = position - starting_position
 		var dir = (-rel.normalized()) * 2
 		apply_central_impulse(dir)
+
+
+func _physics_process(_delta):
+	var colliders = self.get_colliding_bodies()
+	if len(colliders) > 0:
+		for collider in colliders:
+			if collider.is_in_group("player"):
+				emit_signal("hit_player", self, 1)
