@@ -5,7 +5,7 @@ signal hit_player(node, dammage)
 enum Directions { LEFT, RIGHT }
 
 export(Directions) var starting_direction = Directions.LEFT
-export(int) var view_distance = 75
+export(int) var view_distance = 35
 export(float) var view_angle = 100
 export(float) var bounciness = 50
 
