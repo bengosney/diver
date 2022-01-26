@@ -82,7 +82,7 @@ func _physics_process(_delta):
 	for i in get_slide_count():
 		var collision = get_slide_collision(i)
 		if collision.collider.is_in_group("player"):
-			emit_signal("hit_player", collision, 1)
+			emit_signal("hit_player", collision, 10)
 			var bounce = starting_velocity.bounce(collision.normal).normalized() * bounciness
 			velocity = bounce
 
