@@ -7,6 +7,7 @@ enum Directions { LEFT, RIGHT }
 export(Directions) var starting_direction = Directions.LEFT
 export(int) var view_distance = 75
 export(float) var view_angle = 100
+export(float) var bounciness = 50
 
 var gravity = 800
 var buoyancy = 800
@@ -64,7 +65,7 @@ func swim():
 	if dir != 0 and !puffed:
 		velocity.x = lerp(velocity.x, dir * speed, acceleration)
 	else:
-		velocity.x = lerp(velocity.x, 0, friction)
+		velocity.x = lerp(velocity.x, dir, friction)
 
 
 func _process(_delta):
@@ -74,18 +75,16 @@ func _process(_delta):
 		$AnimatedSprite.frame = 0
 
 
-func _physics_process(delta):
+func _physics_process(_delta):
 	var starting_velocity = velocity
-	velocity.y += (gravity - buoyancy) * delta
 	velocity = move_and_slide(velocity, Vector2.UP)
 
 	for i in get_slide_count():
 		var collision = get_slide_collision(i)
 		if collision.collider.is_in_group("player"):
 			emit_signal("hit_player", collision, 1)
-			var bounce = starting_velocity.bounce(collision.normal) * .75
-			var imparted = collision.collider.velocity * 1
-			velocity = bounce + imparted
+			var bounce = starting_velocity.bounce(collision.normal).normalized() * bounciness
+			velocity = bounce
 
 	swim()
 
