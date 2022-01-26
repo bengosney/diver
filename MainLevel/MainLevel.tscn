@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://MainLevel/MainLevel.tres" type="TileSet" id=1]
 [ext_resource path="res://MainLevel/MainLevel.gd" type="Script" id=2]
@@ -7,6 +7,7 @@
 [ext_resource path="res://Chest/Chest.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Grass/Grass.tscn" type="PackedScene" id=6]
 [ext_resource path="res://Puffer/Puffer.tscn" type="PackedScene" id=7]
+[ext_resource path="res://Jellyfish/Jellyfish.tscn" type="PackedScene" id=8]
 
 [sub_resource type="CanvasItemMaterial" id=3]
 blend_mode = 3
@@ -118,5 +119,8 @@ position = Vector2( 60, 89 )
 
 [node name="Puffer2" parent="Enemies" groups=["enemies"] instance=ExtResource( 7 )]
 position = Vector2( 535, 375 )
+
+[node name="Jellyfish" parent="Enemies" groups=["enemies"] instance=ExtResource( 8 )]
+position = Vector2( 299, 45 )
 
 [connection signal="player_entered" from="Sub" to="." method="_on_Sub_player_entered"]
