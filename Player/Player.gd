@@ -115,6 +115,8 @@ func _on_MainLevel_hit_player(collision, dammage):
 	if not can_be_hit:
 		return
 
+	$AnimatedSprite.self_modulate = Color(1, 1, 1, 0.5)
+
 	can_be_hit = false
 	var leek = floor((starting_air / 100) * dammage)
 
@@ -131,3 +133,4 @@ func _on_MainLevel_hit_player(collision, dammage):
 
 func _on_HitTimer_timeout():
 	can_be_hit = true
+	$AnimatedSprite.self_modulate = Color(1, 1, 1, 1)
