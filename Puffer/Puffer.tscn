@@ -14,7 +14,6 @@ animations = [ {
 
 [sub_resource type="CapsuleShape2D" id=2]
 radius = 5.99999
-height = 20.0
 
 [node name="Puffer" type="KinematicBody2D" groups=["bouncy", "enemies"]]
 modulate = Color( 0.286275, 0.286275, 0.286275, 1 )
@@ -31,7 +30,7 @@ shape = SubResource( 2 )
 [node name="View" type="Area2D" parent="."]
 
 [node name="ViewCone" type="CollisionPolygon2D" parent="View"]
-polygon = PoolVector2Array( 0, 0, 92, -58, 92, 62 )
+polygon = PoolVector2Array( 0, 0, 35, -50, 35, 50 )
 
 [connection signal="body_entered" from="View" to="." method="_on_View_body_entered"]
 [connection signal="body_exited" from="View" to="." method="_on_View_body_exited"]
