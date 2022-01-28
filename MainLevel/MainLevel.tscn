@@ -8,7 +8,7 @@
 [ext_resource path="res://Grass/Grass.tscn" type="PackedScene" id=6]
 [ext_resource path="res://Puffer/Puffer.tscn" type="PackedScene" id=7]
 [ext_resource path="res://Jellyfish/Jellyfish.tscn" type="PackedScene" id=8]
-[ext_resource path="res://Jellyfish/JellySwarm.tscn" type="PackedScene" id=9]
+[ext_resource path="res://Swarm/Swarm.tscn" type="PackedScene" id=9]
 
 [sub_resource type="CanvasItemMaterial" id=3]
 blend_mode = 3
@@ -124,9 +124,10 @@ position = Vector2( 535, 375 )
 [node name="Jellyfish" parent="Enemies" instance=ExtResource( 8 )]
 position = Vector2( 413, 44 )
 
-[node name="JellySwarm" parent="Enemies" instance=ExtResource( 9 )]
-position = Vector2( 705.273, 141.903 )
-scale = Vector2( 5.92667, 5.57607 )
+[node name="Swarm" parent="Enemies" instance=ExtResource( 9 )]
+position = Vector2( 672, 118 )
+polygon = PoolVector2Array( -144, -99, 180, -89, 193, 19, 158, 61, 244, 230, -16, 3, -110, 119 )
 swarm_size = 50
+swarm_scene = ExtResource( 8 )
 
 [connection signal="player_entered" from="Sub" to="." method="_on_Sub_player_entered"]
