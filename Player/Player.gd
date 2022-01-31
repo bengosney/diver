@@ -13,7 +13,11 @@ export(float) var breath = 0.1
 export(float) var leek_factor = 0.25
 export(float) var hit_timeout = 0.25
 
-export(PackedScene) var bubble_scene
+export(bool) var start_on_floor = true
+export(bool) var has_light = true
+export(bool) var has_physics = true
+
+var bubble_scene = preload("res://Player/LeekBubbles.tscn")
 
 var velocity = Vector2.ZERO
 var minmax = 0.05
@@ -31,8 +35,11 @@ var leaks = []
 func _ready():
 	$PlayerCamera.limit_smoothed = true
 	$PlayerCamera.reset_smoothing()
-	move_and_collide(Vector2.DOWN * 100)
 	$HitTimer.wait_time = hit_timeout
+	if start_on_floor:
+		move_and_collide(Vector2.DOWN * 100)
+
+	$Light2D.enabled = has_light
 
 
 func set_camera_extents(top, left, right, bottom):
@@ -98,6 +105,9 @@ func _process(delta):
 
 
 func _physics_process(delta):
+	if not has_physics:
+		return
+
 	get_input()
 	velocity.y += (gravity - buoyancy) * delta
 	velocity = move_and_slide(velocity, Vector2.UP, false, 4, PI / 4, false)

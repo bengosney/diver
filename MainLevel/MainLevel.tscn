@@ -62,7 +62,7 @@ __meta__ = {
 }
 
 [node name="Sub" parent="." instance=ExtResource( 3 )]
-position = Vector2( 82, 16 )
+position = Vector2( 99, 42 )
 
 [node name="Background" type="Node2D" parent="."]
 
@@ -88,7 +88,7 @@ position = Vector2( 50, 376 )
 scale = Vector2( 0.5, 0.5 )
 
 [node name="Chest2" parent="PickUps" instance=ExtResource( 5 )]
-position = Vector2( 58, 126 )
+position = Vector2( 58, 124 )
 scale = Vector2( 0.5, 0.5 )
 
 [node name="Chest3" parent="PickUps" instance=ExtResource( 5 )]
@@ -115,24 +115,15 @@ walk_off = true
 [node name="Crab3" parent="Enemies" instance=ExtResource( 4 )]
 position = Vector2( 349, 144 )
 
-[node name="Puffer" parent="Enemies" instance=ExtResource( 7 )]
-position = Vector2( 90, 83 )
-
-[node name="Puffer2" parent="Enemies" instance=ExtResource( 7 )]
-position = Vector2( 535, 375 )
-
-[node name="Jellyfish" parent="Enemies" instance=ExtResource( 8 )]
-position = Vector2( 413, 44 )
-
-[node name="Swarm" parent="Enemies" instance=ExtResource( 9 )]
+[node name="JellySwarm" parent="Enemies" instance=ExtResource( 9 )]
 position = Vector2( 672, 118 )
 polygon = PoolVector2Array( -144, -99, 180, -89, 193, 19, 158, 61, 244, 230, -16, 3, -110, 119 )
 swarm_size = 50
 swarm_scene = ExtResource( 8 )
 
-[node name="Swarm" parent="Enemies/Swarm" instance=ExtResource( 9 )]
-position = Vector2( -467, 347 )
-polygon = PoolVector2Array( -32, -29, 255, -39, 255, 82, -32, 20 )
+[node name="PufferSwarm" parent="Enemies" instance=ExtResource( 9 )]
+position = Vector2( 205, 465 )
+polygon = PoolVector2Array( -34, -35, 255, -39, 255, 82, -34, 58 )
 swarm_scene = ExtResource( 7 )
 
 [connection signal="player_entered" from="Sub" to="." method="_on_Sub_player_entered"]

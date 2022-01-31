@@ -6,7 +6,7 @@
 [ext_resource path="res://Jellyfish/Jellyfish.gd" type="Script" id=4]
 
 [sub_resource type="CircleShape2D" id=2]
-radius = 16.0
+radius = 17.0
 
 [sub_resource type="SpriteFrames" id=1]
 animations = [ {
@@ -21,6 +21,7 @@ modulate = Color( 0.286275, 0.286275, 0.286275, 1 )
 mode = 2
 mass = 0.0816327
 gravity_scale = 0.1
+continuous_cd = 2
 contacts_reported = 5
 contact_monitor = true
 script = ExtResource( 4 )
@@ -31,7 +32,6 @@ shape = SubResource( 2 )
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 scale = Vector2( 0.5, 0.5 )
 frames = SubResource( 1 )
-frame = 1
 playing = true
 
 [node name="Timer" type="Timer" parent="."]
