@@ -1,0 +1,43 @@
+[gd_scene load_steps=4 format=2]
+
+[sub_resource type="CanvasItemMaterial" id=3]
+blend_mode = 3
+
+[sub_resource type="OpenSimplexNoise" id=1]
+
+[sub_resource type="NoiseTexture" id=2]
+width = 1024
+height = 1024
+seamless = true
+noise = SubResource( 1 )
+
+[node name="ParallaxBackground" type="ParallaxBackground"]
+follow_viewport_enable = true
+
+[node name="BaseColour" type="ParallaxLayer" parent="."]
+motion_scale = Vector2( 0, 0 )
+
+[node name="ColorRect" type="ColorRect" parent="BaseColour"]
+margin_left = -678.0
+margin_top = -603.0
+margin_right = 2256.0
+margin_bottom = 1247.0
+color = Color( 0, 0.0980392, 0.14902, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Fog1" type="ParallaxLayer" parent="."]
+motion_scale = Vector2( -0.25, -0.25 )
+
+[node name="TextureRect" type="TextureRect" parent="Fog1"]
+material = SubResource( 3 )
+margin_left = -671.0
+margin_top = -572.0
+margin_right = 2024.0
+margin_bottom = 1098.0
+texture = SubResource( 2 )
+stretch_mode = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}

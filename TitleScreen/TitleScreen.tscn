@@ -1,8 +1,17 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://default.theme" type="Theme" id=1]
 [ext_resource path="res://Player/Player.tscn" type="PackedScene" id=2]
-[ext_resource path="res://assets/level/floor.png" type="Texture" id=4]
+[ext_resource path="res://Jellyfish/Jellyfish.tscn" type="PackedScene" id=3]
+[ext_resource path="res://MainLevel/MainLevel.tres" type="TileSet" id=4]
+[ext_resource path="res://Swarm/Swarm.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Crab/Crab.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Puffer/Puffer.tscn" type="PackedScene" id=7]
+[ext_resource path="res://MainLevel/Background.tscn" type="PackedScene" id=8]
+[ext_resource path="res://Chest/Chest.tscn" type="PackedScene" id=9]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 493.5, 13 )
 
 [node name="TitleScreen" type="Control"]
 anchor_right = 1.0
@@ -11,16 +20,56 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="TextureRect" type="TextureRect" parent="."]
-margin_left = -9.0
-margin_top = 577.0
-margin_right = 1034.0
-margin_bottom = 609.0
-texture = ExtResource( 4 )
-stretch_mode = 2
-__meta__ = {
-"_edit_use_anchors_": false
-}
+[node name="TileMap" type="TileMap" parent="."]
+tile_set = ExtResource( 4 )
+cell_size = Vector2( 32, 32 )
+format = 1
+tile_data = PoolIntArray( 0, 1, 196612, 1, 1, 262145, 2, 1, 262145, 3, 1, 262145, 4, 1, 262145, 5, 1, 262145, 6, 1, 262145, 7, 1, 262145, 8, 1, 262145, 9, 1, 262145, 10, 1, 262145, 11, 1, 262145, 12, 1, 262145, 13, 1, 262145, 14, 1, 262145, 15, 1, 262145, 16, 1, 262145, 17, 1, 262145, 18, 1, 262145, 19, 1, 262145, 20, 1, 262145, 21, 1, 262145, 22, 1, 262145, 23, 1, 262145, 24, 1, 262145, 25, 1, 262145, 26, 1, 262145, 27, 1, 262145, 28, 1, 262145, 29, 1, 262145, 30, 1, 262145, 31, 1, 327684, 65536, 1, 2, 65567, 1, 2, 131072, 1, 2, 131103, 1, 2, 196608, 1, 2, 196639, 1, 2, 262144, 1, 2, 262175, 1, 2, 327680, 1, 2, 327711, 1, 2, 393216, 1, 2, 393247, 1, 2, 458752, 1, 2, 458783, 1, 2, 524288, 1, 2, 524319, 1, 2, 589824, 1, 2, 589855, 1, 2, 655360, 1, 2, 655391, 1, 2, 720896, 1, 2, 720927, 1, 2, 786432, 1, 2, 786463, 1, 2, 851968, 1, 2, 851999, 1, 2, 917504, 1, 2, 917535, 1, 2, 983040, 1, 2, 983071, 1, 2, 1048576, 1, 2, 1048591, 1, 131073, 1048592, 1, 196609, 1048607, 1, 2, 1114112, 1, 131074, 1114113, 1, 65536, 1114114, 1, 65536, 1114115, 1, 65536, 1114116, 1, 196609, 1114121, 1, 65540, 1114126, 1, 131073, 1114127, 1, 327680, 1114128, 1, 393216, 1114129, 1, 196609, 1114134, 1, 65540, 1114139, 1, 131073, 1114140, 1, 65536, 1114141, 1, 65536, 1114142, 1, 65536, 1114143, 1, 327682, 1179648, 1, 65538, 1179649, 1, 262144, 1179650, 1, 262144, 1179651, 1, 262144, 1179652, 1, 65539, 1179653, 1, 262145, 1179654, 1, 262145, 1179655, 1, 262145, 1179656, 1, 262145, 1179657, 1, 327685, 1179658, 1, 262145, 1179659, 1, 262145, 1179660, 1, 262145, 1179661, 1, 262145, 1179662, 1, 3, 1179663, 1, 262144, 1179664, 1, 262144, 1179665, 1, 65539, 1179666, 1, 262145, 1179667, 1, 262145, 1179668, 1, 262145, 1179669, 1, 262145, 1179670, 1, 327685, 1179671, 1, 262145, 1179672, 1, 262145, 1179673, 1, 262145, 1179674, 1, 262145, 1179675, 1, 3, 1179676, 1, 262144, 1179677, 1, 262144, 1179678, 1, 262144, 1179679, 1, 262146 )
+
+[node name="Player" parent="TileMap" instance=ExtResource( 2 )]
+position = Vector2( 71, 508 )
+has_physics = false
+
+[node name="Swarm" parent="TileMap" instance=ExtResource( 5 )]
+position = Vector2( 430, 405 )
+polygon = PoolVector2Array( -389, -166, 553, -161, 556, 21, -387, 19 )
+swarm_size = 50
+swarm_scene = ExtResource( 3 )
+
+[node name="Swarm2" parent="TileMap" instance=ExtResource( 5 )]
+position = Vector2( 81, 73 )
+polygon = PoolVector2Array( -32, -29, 896, -23, 897, 99, -29, 105 )
+swarm_size = 15
+swarm_scene = ExtResource( 7 )
+
+[node name="Crab" parent="TileMap" instance=ExtResource( 6 )]
+position = Vector2( 225, 559 )
+
+[node name="Crab2" parent="TileMap" instance=ExtResource( 6 )]
+position = Vector2( 386, 554 )
+
+[node name="Crab3" parent="TileMap" instance=ExtResource( 6 )]
+position = Vector2( 643, 556 )
+
+[node name="Crab4" parent="TileMap" instance=ExtResource( 6 )]
+position = Vector2( 801, 556 )
+
+[node name="ParallaxBackground" parent="TileMap" instance=ExtResource( 8 )]
+
+[node name="Chest" parent="TileMap" instance=ExtResource( 9 )]
+position = Vector2( 512, 509 )
+
+[node name="StaticBody2D" type="StaticBody2D" parent="TileMap"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TileMap/StaticBody2D"]
+position = Vector2( 512, 210 )
+shape = SubResource( 1 )
+
+[node name="StaticBody2D2" type="StaticBody2D" parent="TileMap"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TileMap/StaticBody2D2"]
+position = Vector2( 513, 452 )
+shape = SubResource( 1 )
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 anchor_left = 0.5
@@ -52,9 +101,3 @@ margin_right = 66.0
 margin_bottom = 331.0
 theme = ExtResource( 1 )
 text = "Start"
-
-[node name="Player" parent="." instance=ExtResource( 2 )]
-position = Vector2( 144, 545 )
-start_on_floor = false
-has_light = false
-has_physics = false
