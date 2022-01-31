@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://default.theme" type="Theme" id=1]
 [ext_resource path="res://Player/Player.tscn" type="PackedScene" id=2]
@@ -9,6 +9,7 @@
 [ext_resource path="res://Puffer/Puffer.tscn" type="PackedScene" id=7]
 [ext_resource path="res://MainLevel/Background.tscn" type="PackedScene" id=8]
 [ext_resource path="res://Chest/Chest.tscn" type="PackedScene" id=9]
+[ext_resource path="res://TitleScreen/TitleScreen.gd" type="Script" id=10]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 493.5, 13 )
@@ -16,6 +17,7 @@ extents = Vector2( 493.5, 13 )
 [node name="TitleScreen" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
+script = ExtResource( 10 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -101,3 +103,5 @@ margin_right = 66.0
 margin_bottom = 331.0
 theme = ExtResource( 1 )
 text = "Start"
+
+[connection signal="pressed" from="VBoxContainer/Button" to="." method="_on_Button_pressed"]
