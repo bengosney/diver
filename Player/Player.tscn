@@ -33,7 +33,7 @@ height = 28.0
 [node name="Player" type="KinematicBody2D" groups=["player"]]
 script = ExtResource( 3 )
 
-[node name="BreathingBubbles" type="Particles2D" parent="."]
+[node name="BreathingBubbles" type="Particles2D" parent="." groups=["player_bubbles"]]
 position = Vector2( 1, -19 )
 amount = 10
 lifetime = 3.0
@@ -44,7 +44,7 @@ draw_order = 1
 process_material = SubResource( 3 )
 texture = ExtResource( 4 )
 
-[node name="BuoyancyBubbles" type="Particles2D" parent="."]
+[node name="BuoyancyBubbles" type="Particles2D" parent="." groups=["player_bubbles"]]
 position = Vector2( 1, -19 )
 emitting = false
 amount = 50
@@ -59,7 +59,6 @@ texture = ExtResource( 4 )
 light_mask = 2
 frames = SubResource( 1 )
 animation = "idle"
-frame = 1
 playing = true
 
 [node name="Leeks" type="Node2D" parent="."]
@@ -91,7 +90,7 @@ smoothing_enabled = true
 one_shot = true
 
 [node name="LastBreath" type="Timer" parent="."]
-wait_time = 10.0
+wait_time = 5.0
 one_shot = true
 
 [connection signal="timeout" from="HitTimer" to="." method="_on_HitTimer_timeout"]

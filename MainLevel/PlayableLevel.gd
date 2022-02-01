@@ -27,3 +27,7 @@ func _on_MainLevel_change_extents(top, left, right, bottom):
 
 func _on_Player_dead():
 	$HUD.set_dead(true)
+
+
+func _on_Player_last_breath(time):
+	$HUD.fade_to_black(time)

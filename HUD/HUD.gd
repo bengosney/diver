@@ -31,3 +31,15 @@ func set_dead(dead):
 		$GameOverText.visible_characters = -1
 	else:
 		$GameOverText.visible_characters = 0
+
+
+func fade_to_black(time):
+	$ColorRect.color.a = 0
+	$ColorRect/FadeToBlack.wait_time = time / 255.0
+	$ColorRect/FadeToBlack.start()
+
+
+func _on_FadeToBlack_timeout():
+	$ColorRect.color.a += (1.0 / 255.0)
+	if $ColorRect.color.a > 1:
+		$ColorRect/FadeToBlack.stop()

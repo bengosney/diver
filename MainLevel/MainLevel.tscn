@@ -23,7 +23,7 @@ tile_data = PoolIntArray( -131072, 1, 196612, -131071, 1, 262145, -131070, 1, 26
 [node name="ParallaxBackground" parent="." instance=ExtResource( 10 )]
 
 [node name="Sub" parent="." instance=ExtResource( 3 )]
-position = Vector2( 99, 42 )
+position = Vector2( 99, 34 )
 
 [node name="Background" type="Node2D" parent="."]
 

@@ -1,6 +1,7 @@
 extends KinematicBody2D
 
 signal dead
+signal last_breath(time)
 
 export(int) var speed = 100
 export(int) var jump_speed = -200
@@ -89,8 +90,8 @@ func get_input():
 
 func breath(delta):
 	var used = breath * delta
-	if used < air:
-		buoyancy = max(0, used - air)
+	if used > air:
+		buoyancy = max(0, buoyancy - (used - air))
 	air = max(0, air - used)
 
 
@@ -102,14 +103,19 @@ func leak(delta):
 	if total_leeks > 0:
 		var leeked = (total_leeks * leek_factor) * delta
 
-		buoyancy = max(0, buoyancy - leeked)
+		if buoyancy <= min_buoy:
+			air = max(0, air - (leeked * .5))
+
+		buoyancy = max(min_buoy, buoyancy - leeked)
 
 
 func _process(delta):
 	breath(delta)
 	leak(delta)
 
-	if air == 0 and buoyancy == 0 and $LastBreath.is_stopped():
+	if air == 0 and buoyancy <= min_buoy and $LastBreath.is_stopped() and !is_dead:
+		print("last breath")
+		emit_signal("last_breath", $LastBreath.wait_time)
 		$LastBreath.start()
 
 
@@ -132,13 +138,18 @@ func _physics_process(delta):
 
 		if collision.collider.is_in_group("enemies"):
 			#if collision.collider.damage > 0:
-			print("hit enemy")
+			#print("hit enemy")
+			pass
 
 
 func _on_MainLevel_hit_player(collision, dammage):
 	if not can_be_hit:
 		return
 
+	hit(collision, dammage)
+
+
+func hit(collision, dammage):
 	$AnimatedSprite.self_modulate = Color(1, 1, 1, 0.5)
 
 	can_be_hit = false
@@ -147,11 +158,14 @@ func _on_MainLevel_hit_player(collision, dammage):
 	var leek_instance = bubble_scene.instance()
 	var pos = collision.position - self.position
 
-	leek_instance.amount = dammage
-	leek_instance.emitting = true
-	leek_instance.position = pos
 	leaks.append(dammage)
-	$Leeks.add_child(leek_instance)
+
+	if len(leaks) < 20:
+		leek_instance.amount = dammage
+		leek_instance.emitting = true
+		leek_instance.position = pos
+		$Leeks.add_child(leek_instance)
+
 	$HitTimer.start()
 
 
@@ -162,3 +176,8 @@ func _on_HitTimer_timeout():
 
 func _on_LastBreath_timeout():
 	emit_signal("dead")
+	is_dead = true
+	$AnimatedSprite.playing = false
+	var bubbles = get_tree().get_nodes_in_group("player_bubbles")
+	for bubble in bubbles:
+		bubble.emitting = false
