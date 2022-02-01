@@ -88,3 +88,23 @@ fit_content_height = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="GameOverText" type="RichTextLabel" parent="."]
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+margin_top = -13.0
+margin_right = -820.0
+margin_bottom = 14.0
+rect_scale = Vector2( 5, 5 )
+rect_clip_content = false
+theme = ExtResource( 3 )
+bbcode_enabled = true
+bbcode_text = "[center]Dead[/center]"
+visible_characters = 0
+percent_visible = 0.0
+text = "Dead"
+fit_content_height = true
+__meta__ = {
+"_edit_use_anchors_": false
+}

@@ -3,6 +3,7 @@ extends Node2D
 signal change_extents(top, left, right, bottom)
 signal hit_player(node, dammage)
 signal pickup
+signal finished
 
 var pickups_total = 0
 var pickups_collected = 0

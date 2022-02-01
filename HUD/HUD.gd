@@ -24,3 +24,10 @@ func set_won(won):
 		$WonText.visible_characters = -1
 	else:
 		$WonText.visible_characters = 0
+
+
+func set_dead(dead):
+	if dead:
+		$GameOverText.visible_characters = -1
+	else:
+		$GameOverText.visible_characters = 0

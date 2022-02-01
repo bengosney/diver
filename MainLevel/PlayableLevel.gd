@@ -1,11 +1,16 @@
 extends Node2D
 
+signal reset_game
+
 
 func _ready():
 	var min_buoy = $Player.min_buoy - $Player.gravity
 	var max_buoy = $Player.max_buoy - $Player.gravity
 
 	$HUD.setup(min_buoy, max_buoy, $Player.starting_air)
+
+	for player in get_tree().get_nodes_in_group("player"):
+		player.connect("dead", self, "_player_dead")
 
 
 func _process(_delta):
@@ -16,10 +21,9 @@ func _process(_delta):
 	$HUD.set_won($MainLevel.won)
 
 
-func _on_HUD_reset():
-	print("reset")
-	$Player.reset()
-
-
 func _on_MainLevel_change_extents(top, left, right, bottom):
 	$Player.set_camera_extents(top, left, right, bottom)
+
+
+func _on_Player_dead():
+	$HUD.set_dead(true)

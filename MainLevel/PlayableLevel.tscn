@@ -15,4 +15,8 @@ position = Vector2( 209, 80 )
 
 [node name="HUD" parent="." instance=ExtResource( 2 )]
 
+[node name="GameOverTimeout" type="Timer" parent="."]
+wait_time = 5.0
+
 [connection signal="change_extents" from="MainLevel" to="." method="_on_MainLevel_change_extents"]
+[connection signal="dead" from="Player" to="." method="_on_Player_dead"]

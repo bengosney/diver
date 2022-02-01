@@ -7,7 +7,5 @@
 script = ExtResource( 4 )
 
 [node name="TitleScreen" parent="." instance=ExtResource( 1 )]
-anchor_right = 0.0
-anchor_bottom = 0.0
 
 [connection signal="start_game" from="TitleScreen" to="." method="_on_TitleScreen_start_game"]

@@ -1,5 +1,7 @@
 extends KinematicBody2D
 
+signal dead
+
 export(int) var speed = 100
 export(int) var jump_speed = -200
 export(int) var gravity = 800
@@ -30,6 +32,7 @@ var air = starting_air
 
 var can_be_hit = true
 var leaks = []
+var is_dead = false
 
 
 func _ready():
@@ -85,7 +88,10 @@ func get_input():
 
 
 func breath(delta):
-	air = max(0, air - (breath * delta))
+	var used = breath * delta
+	if used < air:
+		buoyancy = max(0, used - air)
+	air = max(0, air - used)
 
 
 func leak(delta):
@@ -103,12 +109,16 @@ func _process(delta):
 	breath(delta)
 	leak(delta)
 
+	if air == 0 and buoyancy == 0 and $LastBreath.is_stopped():
+		$LastBreath.start()
+
 
 func _physics_process(delta):
 	if not has_physics:
 		return
 
-	get_input()
+	if not is_dead:
+		get_input()
 	velocity.y += (gravity - buoyancy) * delta
 	velocity = move_and_slide(velocity, Vector2.UP, false, 4, PI / 4, false)
 
@@ -148,3 +158,7 @@ func _on_MainLevel_hit_player(collision, dammage):
 func _on_HitTimer_timeout():
 	can_be_hit = true
 	$AnimatedSprite.self_modulate = Color(1, 1, 1, 1)
+
+
+func _on_LastBreath_timeout():
+	emit_signal("dead")
