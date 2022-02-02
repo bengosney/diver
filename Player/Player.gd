@@ -34,6 +34,7 @@ var air = starting_air
 var can_be_hit = true
 var leaks = []
 var is_dead = false
+var _has_won = false
 
 
 func _ready():
@@ -44,6 +45,10 @@ func _ready():
 		move_and_collide(Vector2.DOWN * 100)
 
 	$Light2D.enabled = has_light
+
+
+func set_won():
+	_has_won = true
 
 
 func set_camera_extents(top, left, right, bottom):
@@ -110,20 +115,21 @@ func leak(delta):
 
 
 func _process(delta):
-	breath(delta)
-	leak(delta)
+	if not _has_won:
+		breath(delta)
+		leak(delta)
 
-	if air == 0 and buoyancy <= min_buoy and $LastBreath.is_stopped() and !is_dead:
-		print("last breath")
-		emit_signal("last_breath", $LastBreath.wait_time)
-		$LastBreath.start()
+		if air == 0 and buoyancy <= min_buoy and $LastBreath.is_stopped() and !is_dead:
+			print("last breath")
+			emit_signal("last_breath", $LastBreath.wait_time)
+			$LastBreath.start()
 
 
 func _physics_process(delta):
 	if not has_physics:
 		return
 
-	if not is_dead:
+	if not is_dead and not _has_won:
 		get_input()
 	velocity.y += (gravity - buoyancy) * delta
 	velocity = move_and_slide(velocity, Vector2.UP, false, 4, PI / 4, false)

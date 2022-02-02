@@ -38,3 +38,4 @@ func _on_HUD_restart_game():
 
 func _on_MainLevel_won():
 	$HUD.set_won($MainLevel.won)
+	$Player.set_won()
