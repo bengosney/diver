@@ -1,5 +1,7 @@
 extends CanvasLayer
 
+signal restart_game
+
 
 func set_buoyancy(buoyancy):
 	$GaugeContainer/Buoyancy.set_value(buoyancy)
@@ -20,17 +22,16 @@ func set_pickups(collected, total):
 
 
 func set_won(won):
-	if won:
-		$WonText.visible_characters = -1
-	else:
-		$WonText.visible_characters = 0
+	_set_game_over(won, "Job Done")
 
 
 func set_dead(dead):
-	if dead:
-		$GameOverText.visible_characters = -1
-	else:
-		$GameOverText.visible_characters = 0
+	_set_game_over(dead, "Dead")
+
+
+func _set_game_over(on_off, text):
+	$GameOver/GameOverText.text = "[center]" + text + "[/center]"
+	$GameOver.visible = on_off
 
 
 func fade_to_black(time):
@@ -43,3 +44,7 @@ func _on_FadeToBlack_timeout():
 	$ColorRect.color.a += (1.0 / 255.0)
 	if $ColorRect.color.a > 1:
 		$ColorRect/FadeToBlack.stop()
+
+
+func _on_TryAgain_pressed():
+	emit_signal("restart_game")

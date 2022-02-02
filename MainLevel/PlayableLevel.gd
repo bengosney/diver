@@ -31,3 +31,7 @@ func _on_Player_dead():
 
 func _on_Player_last_breath(time):
 	$HUD.fade_to_black(time)
+
+
+func _on_HUD_restart_game():
+	get_tree().change_scene("res://Main.tscn")
