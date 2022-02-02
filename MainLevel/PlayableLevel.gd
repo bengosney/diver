@@ -18,7 +18,6 @@ func _process(_delta):
 	$HUD.set_buoyancy(buoyancy)
 	$HUD.set_air($Player.air)
 	$HUD.set_pickups($MainLevel.pickups_collected, $MainLevel.pickups_total)
-	$HUD.set_won($MainLevel.won)
 
 
 func _on_MainLevel_change_extents(top, left, right, bottom):
@@ -35,3 +34,7 @@ func _on_Player_last_breath(time):
 
 func _on_HUD_restart_game():
 	get_tree().change_scene("res://Main.tscn")
+
+
+func _on_MainLevel_won():
+	$HUD.set_won($MainLevel.won)

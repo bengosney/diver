@@ -3,7 +3,7 @@ extends Node2D
 signal change_extents(top, left, right, bottom)
 signal hit_player(node, dammage)
 signal pickup
-signal finished
+signal won
 
 var pickups_total = 0
 var pickups_collected = 0
@@ -48,4 +48,6 @@ func _hit_player(node, dammage):
 
 
 func _on_Sub_player_entered():
-	won = pickups_collected >= pickups_total
+	if pickups_collected >= pickups_total and not won:
+		won = true
+		emit_signal("won")

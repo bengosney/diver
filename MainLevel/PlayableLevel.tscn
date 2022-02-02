@@ -20,6 +20,7 @@ wait_time = 5.0
 
 [connection signal="change_extents" from="MainLevel" to="." method="_on_MainLevel_change_extents"]
 [connection signal="hit_player" from="MainLevel" to="Player" method="_on_MainLevel_hit_player"]
+[connection signal="won" from="MainLevel" to="." method="_on_MainLevel_won"]
 [connection signal="dead" from="Player" to="." method="_on_Player_dead"]
 [connection signal="last_breath" from="Player" to="." method="_on_Player_last_breath"]
 [connection signal="restart_game" from="HUD" to="." method="_on_HUD_restart_game"]

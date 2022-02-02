@@ -30,7 +30,7 @@ func set_dead(dead):
 
 
 func _set_game_over(on_off, text):
-	$GameOver/GameOverText.text = "[center]" + text + "[/center]"
+	$GameOver/GameOverText.bbcode_text = "[center]" + text + "[/center]"
 	$GameOver.visible = on_off
 
 
