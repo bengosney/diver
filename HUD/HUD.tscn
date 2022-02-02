@@ -86,7 +86,6 @@ anchor_right = 0.5
 anchor_bottom = 1.0
 margin_left = -55.0
 margin_right = 55.0
-grow_horizontal = 2
 alignment = 1
 __meta__ = {
 "_edit_use_anchors_": false

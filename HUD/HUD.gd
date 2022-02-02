@@ -21,8 +21,8 @@ func set_pickups(collected, total):
 	$Pickups.text = "Pickups: " + str(collected) + " of " + str(total)
 
 
-func set_won(won):
-	_set_game_over(won, "Job Done")
+func set_won(won, score):
+	_set_game_over(won, "Job Done - " + str(score))
 
 
 func set_dead(dead):

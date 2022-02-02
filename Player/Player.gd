@@ -62,6 +62,10 @@ func reset():
 	air = starting_air
 
 
+func get_score():
+	return air
+
+
 func get_input():
 	var mod = .5
 	if is_on_ceiling() or is_on_wall() or is_on_floor():
