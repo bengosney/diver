@@ -65,10 +65,7 @@ margin_top = 228.0
 margin_bottom = 292.0
 
 [node name="Pickups" type="RichTextLabel" parent="."]
-anchor_left = 1.0
-anchor_right = 1.0
-margin_left = -1024.0
-margin_right = -802.0
+margin_right = 222.0
 margin_bottom = 27.0
 rect_clip_content = false
 theme = ExtResource( 3 )

@@ -18,10 +18,12 @@ follow_viewport_enable = true
 motion_scale = Vector2( 0, 0 )
 
 [node name="ColorRect" type="ColorRect" parent="BaseColour"]
-margin_left = -678.0
-margin_top = -603.0
-margin_right = 2256.0
-margin_bottom = 1247.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -4096.0
+margin_top = -4096.0
+margin_right = 4096.0
+margin_bottom = 4096.0
 color = Color( 0, 0.0980392, 0.14902, 1 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -32,10 +34,12 @@ motion_scale = Vector2( -0.25, -0.25 )
 
 [node name="TextureRect" type="TextureRect" parent="Fog1"]
 material = SubResource( 3 )
-margin_left = -671.0
-margin_top = -572.0
-margin_right = 2024.0
-margin_bottom = 1098.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -4096.0
+margin_top = -4096.0
+margin_right = 4096.0
+margin_bottom = 4096.0
 texture = SubResource( 2 )
 stretch_mode = 2
 __meta__ = {

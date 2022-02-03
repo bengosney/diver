@@ -54,19 +54,7 @@ func set_won():
 
 
 func set_camera_zoom():
-	return
-	var viewport = get_viewport_rect()
-
-	var width = 1024
-	var height = 600
-
-	var zoom_x = min(1, width / viewport.size.x)
-	var zoom_y = min(1, height / viewport.size.y)
-
-	var zoom = min(zoom_x, zoom_y)
-
-	$PlayerCamera.zoom.x = zoom
-	$PlayerCamera.zoom.y = zoom
+	pass
 
 
 func set_camera_extents(top, left, right, bottom):
