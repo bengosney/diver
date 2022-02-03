@@ -46,9 +46,26 @@ func _ready():
 
 	$Light2D.enabled = has_light
 
+	get_tree().get_root().connect("size_changed", self, "set_camera_zoom")
+
 
 func set_won():
 	_has_won = true
+
+
+func set_camera_zoom():
+	var viewport = get_viewport_rect()
+
+	var width = 1024
+	var height = 800
+
+	var zoom_x = min(1, width / viewport.size.x)
+	var zoom_y = min(1, height / viewport.size.y)
+
+	var zoom = min(zoom_x, zoom_y)
+
+	$PlayerCamera.zoom.x = zoom
+	$PlayerCamera.zoom.y = zoom
 
 
 func set_camera_extents(top, left, right, bottom):

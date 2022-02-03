@@ -36,13 +36,6 @@ func calculate_bounds():
 	emit_signal("change_extents", limit_top, limit_left, limit_right, limit_bottom)
 
 
-func calculate_boundsy():
-	var rect = $MainLevel.get_used_rect()
-	var cell_size = $MainLevel.cell_size
-
-	emit_signal("change_extents", 0, 0, rect.end.x * cell_size.x, rect.end.y * cell_size.y)
-
-
 func _hit_player(node, dammage):
 	emit_signal("hit_player", node, dammage)
 
