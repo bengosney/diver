@@ -9,14 +9,18 @@ script = ExtResource( 1 )
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_top = -20.0
+margin_top = -60.0
+custom_constants/separation = 15
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Left" type="Button" parent="HBoxContainer"]
-margin_right = 40.0
-margin_bottom = 20.0
+margin_right = 60.0
+margin_bottom = 60.0
+grow_horizontal = 2
+grow_vertical = 2
+rect_min_size = Vector2( 60, 60 )
 action_mode = 0
 text = "LEFT"
 __meta__ = {
@@ -24,9 +28,10 @@ __meta__ = {
 }
 
 [node name="Right" type="Button" parent="HBoxContainer"]
-margin_left = 44.0
-margin_right = 96.0
-margin_bottom = 20.0
+margin_left = 75.0
+margin_right = 135.0
+margin_bottom = 60.0
+rect_min_size = Vector2( 60, 60 )
 text = "RIGHT"
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
@@ -36,21 +41,24 @@ anchor_bottom = 1.0
 margin_left = -37.0
 grow_horizontal = 0
 grow_vertical = 0
+custom_constants/separation = 20
 alignment = 2
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Inc" type="Button" parent="VBoxContainer"]
-margin_top = 556.0
-margin_right = 37.0
-margin_bottom = 576.0
+margin_top = 460.0
+margin_right = 60.0
+margin_bottom = 520.0
+rect_min_size = Vector2( 60, 60 )
 text = "INC"
 
 [node name="Dec" type="Button" parent="VBoxContainer"]
-margin_top = 580.0
-margin_right = 37.0
+margin_top = 540.0
+margin_right = 60.0
 margin_bottom = 600.0
+rect_min_size = Vector2( 60, 60 )
 text = "DEC"
 __meta__ = {
 "_edit_use_anchors_": false
