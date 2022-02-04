@@ -2,8 +2,8 @@ extends Polygon2D
 
 export(int) var swarm_size = 5
 export(PackedScene) var swarm_scene
-export(int) var min_scale = 0.25
-export(int) var max_scale = 1
+export(float) var min_scale = .25
+export(float) var max_scale = 1.0
 
 var swarm = []
 
@@ -29,9 +29,10 @@ func _spawn_swarm():
 
 		swarm_instance.position = get_random_point()
 
-		var rand_scale = _rand.randf_range(min_scale, max_scale)
-		swarm_instance.set("scale", rand_scale)
-		swarm_instance.set("size_scale", rand_scale)
+		if min_scale != max_scale:
+			var rand_scale = _rand.randf_range(min_scale, max_scale)
+			#swarm_instance.set("scale", rand_scale)
+			swarm_instance.set("size_scale", rand_scale)
 
 		swarm.append(swarm_instance)
 		add_child(swarm_instance)
