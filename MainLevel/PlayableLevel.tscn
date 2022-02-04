@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://Player/Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://HUD/HUD.tscn" type="PackedScene" id=2]
 [ext_resource path="res://MainLevel/MainLevel.tscn" type="PackedScene" id=3]
 [ext_resource path="res://MainLevel/PlayableLevel.gd" type="Script" id=4]
+[ext_resource path="res://TouchControls/TouchControls.tscn" type="PackedScene" id=5]
 
 [node name="PlayableLevel" type="Node2D" groups=["level"]]
 script = ExtResource( 4 )
@@ -17,6 +18,8 @@ position = Vector2( 209, 80 )
 
 [node name="GameOverTimeout" type="Timer" parent="."]
 wait_time = 5.0
+
+[node name="TouchControls" parent="." instance=ExtResource( 5 )]
 
 [connection signal="change_extents" from="MainLevel" to="." method="_on_MainLevel_change_extents"]
 [connection signal="hit_player" from="MainLevel" to="Player" method="_on_MainLevel_hit_player"]
