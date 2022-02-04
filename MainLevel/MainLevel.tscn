@@ -84,7 +84,9 @@ swarm_scene = ExtResource( 8 )
 
 [node name="PufferSwarm" parent="Enemies" instance=ExtResource( 9 )]
 position = Vector2( 205, 465 )
-polygon = PoolVector2Array( -34, -35, 255, -39, 255, 82, -34, 58 )
+polygon = PoolVector2Array( -100, -34, 739.092, -33.346, 775, 0, 855.285, -6.49371, 853, -45, 1185, -45, 1181, 99, -102, 90 )
+swarm_size = 15
 swarm_scene = ExtResource( 7 )
+min_scale = 1
 
 [connection signal="player_entered" from="Sub" to="." method="_on_Sub_player_entered"]
