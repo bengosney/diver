@@ -1,38 +1,50 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://TouchControls/TouchControls.gd" type="Script" id=1]
+[ext_resource path="res://assets/ui/ui_5.png" type="Texture" id=2]
+[ext_resource path="res://assets/ui/ui_1.png" type="Texture" id=3]
+[ext_resource path="res://assets/ui/ui_3.png" type="Texture" id=4]
+[ext_resource path="res://assets/ui/ui_6.png" type="Texture" id=5]
+
+[sub_resource type="CircleShape2D" id=1]
+radius = 32.0
+
+[sub_resource type="CircleShape2D" id=2]
+radius = 32.0
+
+[sub_resource type="CircleShape2D" id=3]
+radius = 32.0
+
+[sub_resource type="CircleShape2D" id=4]
+radius = 32.0
 
 [node name="TouchControls" type="CanvasLayer"]
 script = ExtResource( 1 )
+button_size = 128
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_top = -60.0
+grow_vertical = 0
 custom_constants/separation = 15
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Left" type="Button" parent="HBoxContainer"]
-margin_right = 60.0
-margin_bottom = 60.0
-grow_horizontal = 2
-grow_vertical = 2
-rect_min_size = Vector2( 60, 60 )
-action_mode = 0
-text = "LEFT"
-__meta__ = {
-"_edit_use_anchors_": false
-}
+[node name="Left" type="TouchScreenButton" parent="HBoxContainer"]
+normal = ExtResource( 3 )
+shape = SubResource( 1 )
+action = "walk_left"
+visibility_mode = 1
 
-[node name="Right" type="Button" parent="HBoxContainer"]
-margin_left = 75.0
-margin_right = 135.0
-margin_bottom = 60.0
-rect_min_size = Vector2( 60, 60 )
-text = "RIGHT"
+[node name="Right" type="TouchScreenButton" parent="HBoxContainer"]
+position = Vector2( 96, 0 )
+normal = ExtResource( 4 )
+shape = SubResource( 2 )
+action = "walk_right"
+visibility_mode = 1
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 anchor_left = 1.0
@@ -47,28 +59,16 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Inc" type="Button" parent="VBoxContainer"]
-margin_top = 460.0
-margin_right = 60.0
-margin_bottom = 520.0
-rect_min_size = Vector2( 60, 60 )
-text = "INC"
+[node name="Inc" type="TouchScreenButton" parent="VBoxContainer"]
+position = Vector2( -28, 454 )
+normal = ExtResource( 2 )
+shape = SubResource( 3 )
+action = "buoyancy_inc"
+visibility_mode = 1
 
-[node name="Dec" type="Button" parent="VBoxContainer"]
-margin_top = 540.0
-margin_right = 60.0
-margin_bottom = 600.0
-rect_min_size = Vector2( 60, 60 )
-text = "DEC"
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[connection signal="button_down" from="HBoxContainer/Left" to="." method="_on_Left_button_down"]
-[connection signal="button_up" from="HBoxContainer/Left" to="." method="_on_Left_button_up"]
-[connection signal="button_down" from="HBoxContainer/Right" to="." method="_on_Right_button_down"]
-[connection signal="button_up" from="HBoxContainer/Right" to="." method="_on_Right_button_up"]
-[connection signal="button_down" from="VBoxContainer/Inc" to="." method="_on_Inc_button_down"]
-[connection signal="button_up" from="VBoxContainer/Inc" to="." method="_on_Inc_button_up"]
-[connection signal="button_down" from="VBoxContainer/Dec" to="." method="_on_Dec_button_down"]
-[connection signal="button_up" from="VBoxContainer/Dec" to="." method="_on_Dec_button_up"]
+[node name="Dec" type="TouchScreenButton" parent="VBoxContainer"]
+position = Vector2( -28, 535 )
+normal = ExtResource( 5 )
+shape = SubResource( 4 )
+action = "buoyancy_dec"
+visibility_mode = 1
