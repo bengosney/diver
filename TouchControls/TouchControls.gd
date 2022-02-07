@@ -1,37 +1,9 @@
 extends CanvasLayer
 
+export(int) var button_size = 64
+
 
 func _ready():
-	pass
-
-
-func _on_Left_button_down():
-	Input.action_press("walk_left")
-
-
-func _on_Left_button_up():
-	Input.action_release("walk_left")
-
-
-func _on_Right_button_down():
-	Input.action_press("walk_right")
-
-
-func _on_Right_button_up():
-	Input.action_release("walk_right")
-
-
-func _on_Inc_button_down():
-	Input.action_press("buoyancy_inc")
-
-
-func _on_Inc_button_up():
-	Input.action_release("buoyancy_inc")
-
-
-func _on_Dec_button_down():
-	Input.action_press("buoyancy_dec")
-
-
-func _on_Dec_button_up():
-	Input.action_release("buoyancy_dec")
+	for button in get_tree().get_nodes_in_group("buttons"):
+		button.rect_min_size.x = button_size
+		button.rect_min_size.y = button_size
