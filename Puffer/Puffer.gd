@@ -74,6 +74,8 @@ func _process(_delta):
 	else:
 		$AnimatedSprite.frame = 0
 
+	$CollisionShapePuffed.disabled = !puffed
+
 
 func _physics_process(_delta):
 	var starting_velocity = velocity
@@ -92,8 +94,14 @@ func _physics_process(_delta):
 func _on_View_body_entered(body):
 	if body.is_in_group("player"):
 		puffed = true
+		$PuffedTimer.start()
 
 
 func _on_View_body_exited(body):
 	if body.is_in_group("player"):
 		puffed = false
+		$PuffedTimer.stop()
+
+
+func _on_PuffedTimer_timeout():
+	turn_around()
