@@ -1,0 +1,24 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://MainLevel/MainLevel.tres" type="TileSet" id=1]
+[ext_resource path="res://RandomLevel/RandomLevel.gd" type="Script" id=2]
+[ext_resource path="res://Player/Player.tscn" type="PackedScene" id=3]
+[ext_resource path="res://MainLevel/Background.tscn" type="PackedScene" id=4]
+
+[node name="RandomLevel" type="Node2D"]
+script = ExtResource( 2 )
+
+[node name="Navigation2D" type="Navigation2D" parent="."]
+
+[node name="TileMap" type="TileMap" parent="Navigation2D"]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 32, 32 )
+format = 1
+tile_data = PoolIntArray( 458754, 1, 131076, 458755, 1, 262145, 458756, 1, 262145, 458757, 1, 262145, 458758, 1, 262145, 458759, 1, 262145, 458760, 1, 262145, 458761, 1, 262145, 458762, 1, 262145, 458763, 1, 262145, 458764, 1, 262145, 458765, 1, 262145, 458766, 1, 262145, 458767, 1, 262148 )
+
+[node name="ParallaxBackground" parent="Navigation2D/TileMap" instance=ExtResource( 4 )]
+
+[node name="Player" parent="." instance=ExtResource( 3 )]
+position = Vector2( 208, 75 )
+
+[node name="Line2D" type="Line2D" parent="."]
