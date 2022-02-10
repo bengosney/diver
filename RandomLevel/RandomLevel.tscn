@@ -20,5 +20,6 @@ tile_data = PoolIntArray( 458754, 1, 131076, 458755, 1, 262145, 458756, 1, 26214
 
 [node name="Player" parent="." instance=ExtResource( 3 )]
 position = Vector2( 208, 75 )
+zoom = 2.3
 
-[node name="Line2D" type="Line2D" parent="."]
+[connection signal="ready" from="Navigation2D/TileMap" to="." method="_on_TileMap_ready"]

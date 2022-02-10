@@ -4,11 +4,11 @@ var _rng = RandomNumberGenerator.new()
 var _chest = preload("res://Chest/Chest.tscn")
 
 
-func vec_to_grid(vec: Vector2, cell_size: Vector2, item_size: Vector2):
+func vec_to_grid(vec: Vector2, cell_size: Vector2):
 	var x = floor(vec.x / cell_size.x) * cell_size.x
-	var y = floor(vec.y / cell_size.x) * cell_size.y
+	var y = (floor(vec.y / cell_size.x) * cell_size.y) + cell_size.y
 
-	return Vector2(x, y) + (item_size / 2)
+	return Vector2(x, y)
 
 
 func rng_vec(extents: Vector2):
@@ -50,22 +50,38 @@ func _ready():
 	map.update_dirty_quadrants()
 	map.update_bitmask_region()
 
+	var cells = map.get_used_cells_by_id(1)
+
 	var from = $Player.position
 
-	for i in range(5):
+	for i in range(10):
 		var path: Array = []
 		var chest_pos: Vector2
 		var new_chest = _chest.instance()
+		var pos: Vector2
 		while len(path) == 0:
-			chest_pos = vec_to_grid(rng_vec(map_extents), map.cell_size, new_chest.get_size())
-			var to = chest_pos
-			path = $Navigation2D.get_simple_path(from, to)
+			pos = rng_vec(map_extents)
+			var map_pos = map.world_to_map(pos)
+			if map.get_cellv(map_pos) == 2:
+				chest_pos = vec_to_grid(pos, map.cell_size) + new_chest.get_offset()
+				path = $Navigation2D.get_simple_path(from, chest_pos)
 
 		var new_line = Line2D.new()
 		new_line.points = path
+		new_line.width = 3
 		self.add_child(new_line)
 
 		new_chest.position = chest_pos
-		self.add_child(new_chest)
-		print(i)
+		new_chest.add_to_group("pickups")
+		map.add_child(new_chest)
 		new_chest.move_to_floor()
+
+
+func put_chests_on_floor():
+	var chests = get_tree().get_nodes_in_group("pickups")
+	for chest in chests:
+		chest.move_to_floor()
+
+
+func _on_TileMap_ready():
+	put_chests_on_floor()

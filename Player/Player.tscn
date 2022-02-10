@@ -59,7 +59,6 @@ texture = ExtResource( 4 )
 light_mask = 2
 frames = SubResource( 1 )
 animation = "idle"
-frame = 1
 playing = true
 
 [node name="Leeks" type="Node2D" parent="."]

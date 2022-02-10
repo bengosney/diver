@@ -20,6 +20,8 @@ export(bool) var start_on_floor = true
 export(bool) var has_light = true
 export(bool) var has_physics = true
 
+export(float, 0.01, 10) var zoom = 1
+
 var bubble_scene = preload("res://Player/LeekBubbles.tscn")
 
 var velocity = Vector2.ZERO
@@ -125,6 +127,7 @@ func leak(delta):
 
 
 func _process(delta):
+	$PlayerCamera.zoom = Vector2(zoom, zoom)
 	if not _has_won:
 		breath(delta)
 		leak(delta)
