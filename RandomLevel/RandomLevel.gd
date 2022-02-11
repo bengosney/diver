@@ -54,6 +54,8 @@ func _ready():
 
 	var from = $Player.position
 
+	var chest_positions = []
+
 	for i in range(10):
 		var path: Array = []
 		var chest_pos: Vector2
@@ -63,9 +65,22 @@ func _ready():
 			pos = rng_vec(map_extents)
 			var map_pos = map.world_to_map(pos)
 			if map.get_cellv(map_pos) == 2:
-				chest_pos = vec_to_grid(pos, map.cell_size) + new_chest.get_offset()
-				path = $Navigation2D.get_simple_path(from, chest_pos)
+				var mov = Vector2.DOWN * map.cell_size.y
+				while map.get_cellv(map_pos) == 2:
+					pos = pos + mov
+					map_pos = map.world_to_map(pos)
+				pos = pos - mov
 
+				chest_pos = vec_to_grid(pos, map.cell_size) + new_chest.get_offset()
+				var too_close = false
+				for c in chest_positions:
+					if chest_pos.distance_to(c) < (max(map.cell_size.y, map.cell_size.x) * 4):
+						too_close = true
+
+				if not too_close:
+					path = $Navigation2D.get_simple_path(from, chest_pos)
+
+		chest_positions.append(chest_pos)
 		var new_line = Line2D.new()
 		new_line.points = path
 		new_line.width = 3
