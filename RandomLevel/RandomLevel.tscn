@@ -24,16 +24,5 @@ position = Vector2( 167, 96 )
 
 [node name="Player" parent="." instance=ExtResource( 3 )]
 position = Vector2( 166, 49 )
-zoom = 2.3
-
-[node name="ColorRect" type="ColorRect" parent="."]
-margin_left = 587.0
-margin_top = 59.0
-margin_right = 627.0
-margin_bottom = 99.0
-color = Color( 0.180392, 0.419608, 0.0431373, 1 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [connection signal="ready" from="Navigation2D/TileMap" to="." method="_on_TileMap_ready"]

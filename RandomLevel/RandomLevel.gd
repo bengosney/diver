@@ -35,12 +35,6 @@ func build_astar():
 
 	for cell in used_cells:
 		astar.add_point(id(cell), cell, 1.0)
-		if cell == Vector2(5, 4):
-			print("found player")
-		if cell == Vector2(18, 4):
-			print("found chest")
-		if cell.y == 4:
-			print(cell)
 
 	for cell in used_cells:
 		var neighbors = [Vector2.RIGHT, Vector2.LEFT, Vector2.DOWN, Vector2.UP]
@@ -97,58 +91,61 @@ func init_level():
 
 	var cells = map.get_used_cells_by_id(1)
 	var from = $Player.position
-	var chest_positions = []
+	var chest_positions: Array = []
 
 	var empty_cells = map.get_used_cells_by_id(2)
+	var player_pos = map.world_to_map($Player.position)
 
 	var astar = build_astar()
-	for i in range(1):
+	for i in range(10):
 		var path: Array = []
 		var chest_pos: Vector2
 		var new_chest = _chest.instance()
 		var pos: Vector2
 		var attempts = 0
 		while len(path) == 0:
-			if attempts > 0:
+			if attempts > 50:
 				print("bad seed")
 				break
 			attempts += 1
 
 			pos = empty_cells[randi() % empty_cells.size()]
+			while empty_cells.has(pos + Vector2.DOWN):
+				pos = pos + Vector2.DOWN
 
-			pos = rng_vec(map_extents)
-			pos = $ColorRect.rect_position
-			var map_pos = map.world_to_map(pos)
-			if map.get_cellv(map_pos) == 2:
-				var mov = Vector2.DOWN * map.cell_size.y
-				while map.get_cellv(map_pos) == 2:
-					pos = pos + mov
-					map_pos = map.world_to_map(pos)
-				pos = (pos - mov) - Vector2.UP
+			var too_close = false
+			for p in chest_positions:
+				if pos.distance_to(p) < 4:
+					too_close = true
 
-				chest_pos = vec_to_grid(pos, map.cell_size) + new_chest.get_offset()
-				var too_close = false
-				for c in chest_positions:
-					if chest_pos.distance_to(c) < (max(map.cell_size.y, map.cell_size.x) * 4):
-						too_close = true
+			if not too_close:
+				path = astar.get_point_path(id(player_pos), id(pos))
 
-				if not too_close:
-					#path = $Navigation2D.get_simple_path(from, chest_pos, false)
-					print(from, " : ", chest_pos)
-					print(map.world_to_map(from), " - ", map.world_to_map(chest_pos))
-					var a = id(map.world_to_map(from))
-					#var b = id(map.world_to_map(from + (Vector2.RIGHT * 128)))
-					var b = id(map.world_to_map(chest_pos) - Vector2.UP)
-					print(a, " : ", b)
-					path = astar.get_point_path(a, b)
+		draw_map_path(path)
+		clear_path(path)
+		chest_positions.append(pos)
 
-		print(path)
-		chest_positions.append(chest_pos)
-		var new_line = Line2D.new()
-		new_line.points = path
-		new_line.width = 3
-		self.add_child(new_line)
-
-		new_chest.position = chest_pos
+		new_chest.position = map.map_to_world(pos + Vector2.DOWN) + new_chest.get_offset()
 		new_chest.add_to_group("pickups")
 		map.add_child(new_chest)
+
+
+func clear_path(path: Array):
+	var map = $Navigation2D/TileMap
+	var empty_cells = map.get_used_cells_by_id(2)
+
+	for p in path:
+		var up = p + Vector2.UP
+		var down = p + Vector2.DOWN
+		if not empty_cells.has(up) and not empty_cells.has(down):
+			map.set_cellv(up, 2)
+
+
+func draw_map_path(path: Array):
+	var new_line = Line2D.new()
+	var points = []
+	for p in path:
+		points.append($Navigation2D/TileMap.map_to_world(p))
+	new_line.points = points
+	new_line.width = 3
+	self.add_child(new_line)
