@@ -89,14 +89,3 @@ func _ready():
 		new_chest.position = chest_pos
 		new_chest.add_to_group("pickups")
 		map.add_child(new_chest)
-		new_chest.move_to_floor()
-
-
-func put_chests_on_floor():
-	var chests = get_tree().get_nodes_in_group("pickups")
-	for chest in chests:
-		chest.move_to_floor()
-
-
-func _on_TileMap_ready():
-	put_chests_on_floor()
