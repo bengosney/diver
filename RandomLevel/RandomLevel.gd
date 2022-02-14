@@ -86,19 +86,14 @@ func join_caverns():
 		if cave.size() < 30 or cave == player_cave:
 			continue
 
-		#var from = player_cave[_rng.randi_range(0, player_cave.size())]
 		var from = _rand_element(player_cave)
-		#var to = cave[_rng.randi_range(0, cave.size())]
 		var to = _rand_element(cave)
-
-		var last_x
-		for x in range(from.x, to.x):
-			last_x = x
-			map.set_cell(x, from.y, 2)
-			map.set_cell(x, (from + Vector2.UP).y, 2)
-
-		for y in range(from.y, to.y):
-			map.set_cell(last_x, y, 2)
+		var cur = from
+		while cur != to:
+			map.set_cellv(cur - Vector2.UP, 2)
+			map.set_cellv(cur, 2)
+			map.set_cellv(cur + Vector2.UP, 2)
+			cur = cur.move_toward(to, 1)
 
 
 func _rand_element(thing):
@@ -175,7 +170,7 @@ func init_level():
 				if pos.distance_to(p) < 4:
 					too_close = true
 
-			if not too_close:
+			if not too_close and empty_cells.has(pos + Vector2.UP):
 				path = astar.get_point_path(id(player_pos), id(pos))
 
 		draw_map_path(path)
