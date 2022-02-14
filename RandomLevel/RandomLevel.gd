@@ -1,7 +1,7 @@
 extends Node2D
 
-export(int) var level_seed = 1
-export(int) var chest_count = 1
+export(int) var level_seed = 5
+export(int) var chest_count = 10
 
 var _rng = RandomNumberGenerator.new()
 var _chest = preload("res://Chest/Chest.tscn")
@@ -86,7 +86,10 @@ func join_caverns():
 		if cave.size() < 30 or cave == player_cave:
 			continue
 
-		var from = _rand_element(player_cave)
+		var from = Vector2(0, 0)
+		while from.y < 10 or from.x < 10:
+			from = _rand_element(player_cave)
+
 		var to = _rand_element(cave)
 		var cur = from
 		while cur != to:
@@ -138,9 +141,6 @@ func init_level():
 
 	join_caverns()
 
-	map.update_dirty_quadrants()
-	map.update_bitmask_region()
-
 	var cells = map.get_used_cells_by_id(1)
 	var from = $Player.position
 	var chest_positions: Array = []
@@ -149,7 +149,7 @@ func init_level():
 	var player_pos = map.world_to_map($Player.position)
 
 	var astar = build_astar()
-	for i in range(10):
+	for i in range(chest_count):
 		var path: Array = []
 		var chest_pos: Vector2
 		var new_chest = _chest.instance()
@@ -181,6 +181,9 @@ func init_level():
 		new_chest.add_to_group("pickups")
 		map.add_child(new_chest)
 
+	map.update_dirty_quadrants()
+	map.update_bitmask_region()
+
 
 func clear_path(path: Array):
 	var map = $Navigation2D/TileMap
@@ -189,11 +192,11 @@ func clear_path(path: Array):
 	for p in path:
 		var up = p + Vector2.UP
 		var down = p + Vector2.DOWN
-		if not empty_cells.has(up) and not empty_cells.has(down):
-			map.set_cellv(up, 2)
+		map.set_cellv(up, 2)
 
 
 func draw_map_path(path: Array):
+	return
 	var new_line = Line2D.new()
 	var points = []
 	for p in path:
