@@ -53,7 +53,7 @@ func _ready():
 func join_caverns():
 	var map = $Navigation2D/TileMap
 	var empty_cells = map.get_used_cells_by_id(2)
-	var groups = []
+	var caves = []
 	var used = []
 
 	for empty_cell in empty_cells:
@@ -73,11 +73,36 @@ func join_caverns():
 					var n = cell + d
 					if empty_cells.has(n):
 						to_check.append(n)
-		groups.append(group.size())
+		caves.append(group)
 
-	for group in groups:
-		if group.size() < 30:
+	var player_cave
+	var player_pos = map.world_to_map($Player.position)
+	for cave in caves:
+		if cave.has(player_pos):
+			player_cave = cave
+			break
+
+	for cave in caves:
+		if cave.size() < 30 or cave == player_cave:
 			continue
+
+		#var from = player_cave[_rng.randi_range(0, player_cave.size())]
+		var from = _rand_element(player_cave)
+		#var to = cave[_rng.randi_range(0, cave.size())]
+		var to = _rand_element(cave)
+
+		var last_x
+		for x in range(from.x, to.x):
+			last_x = x
+			map.set_cell(x, from.y, 2)
+			map.set_cell(x, (from + Vector2.UP).y, 2)
+
+		for y in range(from.y, to.y):
+			map.set_cell(last_x, y, 2)
+
+
+func _rand_element(thing):
+	return thing[_rng.randi_range(0, thing.size() - 1)]
 
 
 func init_level():
