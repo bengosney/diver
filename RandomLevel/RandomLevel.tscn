@@ -24,5 +24,4 @@ position = Vector2( 167, 96 )
 
 [node name="Player" parent="." instance=ExtResource( 3 )]
 position = Vector2( 166, 49 )
-
-[connection signal="ready" from="Navigation2D/TileMap" to="." method="_on_TileMap_ready"]
+zoom = 2.3

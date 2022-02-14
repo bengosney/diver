@@ -50,6 +50,36 @@ func _ready():
 	init_level()
 
 
+func join_caverns():
+	var map = $Navigation2D/TileMap
+	var empty_cells = map.get_used_cells_by_id(2)
+	var groups = []
+	var used = []
+
+	for empty_cell in empty_cells:
+		if used.has(empty_cell):
+			continue
+
+		var to_check = [empty_cell]
+		var group = []
+
+		while to_check.size() > 0:
+			var cell = to_check.pop_front()
+			if not group.has(cell):
+				group.append(cell)
+				used.append(cell)
+
+				for d in [Vector2.UP, Vector2.RIGHT, Vector2.DOWN, Vector2.LEFT]:
+					var n = cell + d
+					if empty_cells.has(n):
+						to_check.append(n)
+		groups.append(group.size())
+
+	for group in groups:
+		if group.size() < 30:
+			continue
+
+
 func init_level():
 	_rng.seed = level_seed
 	var noise = OpenSimplexNoise.new()
@@ -85,6 +115,8 @@ func init_level():
 	for y in range(0, map_size.y):
 		map.set_cell(0, y, true)
 		map.set_cell(map_size.x - 1, y, true)
+
+	join_caverns()
 
 	map.update_dirty_quadrants()
 	map.update_bitmask_region()
