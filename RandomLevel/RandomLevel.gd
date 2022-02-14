@@ -1,6 +1,6 @@
 extends Node2D
 
-export(int) var level_seed = 5
+export(int) var level_seed = 8
 export(int) var chest_count = 10
 
 var _rng = RandomNumberGenerator.new()
@@ -86,9 +86,9 @@ func join_caverns():
 		if cave.size() < 30 or cave == player_cave:
 			continue
 
-		var from = Vector2(0, 0)
-		while from.y < 10 or from.x < 10:
-			from = _rand_element(player_cave)
+		var from = _rand_element(player_cave)
+		from.x = max(player_pos.x, from.x)
+		from.y = max(player_pos.y, from.y)
 
 		var to = _rand_element(cave)
 		var cur = from
