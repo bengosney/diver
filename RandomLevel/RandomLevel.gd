@@ -1,12 +1,21 @@
 extends Node2D
 
-export(int) var level_seed = 8
+const BACKGROUND_LAYER = 2
+const FORGROUND_LAYER = 1
+
+export(int) var level_seed = 1
 export(int) var chest_count = 10
 
 var _rng = RandomNumberGenerator.new()
 var _chest = preload("res://Chest/Chest.tscn")
+var _spawner = preload("res://Swarm/Swarm.tscn")
+var _puffer = preload("res://Puffer/Puffer.tscn")
+
+var _pickups_total = 0
+var _pickups_collected = 0
 
 onready var astar = AStar2D.new()
+onready var map = $TileMap
 
 
 func vec_to_grid(vec: Vector2, cell_size: Vector2):
@@ -27,11 +36,10 @@ func id(point: Vector2):
 
 
 func build_astar():
-	var map = $Navigation2D/TileMap
 	var map_size = Vector2(80, 40)
 	var map_extents = map.cell_size * map_size
 
-	var used_cells = map.get_used_cells_by_id(2)
+	var used_cells = map.get_used_cells_by_id(BACKGROUND_LAYER)
 
 	for cell in used_cells:
 		astar.add_point(id(cell), cell, 1.0)
@@ -49,10 +57,61 @@ func build_astar():
 func _ready():
 	init_level()
 
+	$Player.starting_air = map.get_used_cells_by_id(BACKGROUND_LAYER).size() * 0.15
 
-func join_caverns():
-	var map = $Navigation2D/TileMap
-	var empty_cells = map.get_used_cells_by_id(2)
+	var min_buoy = $Player.min_buoy - $Player.gravity
+	var max_buoy = $Player.max_buoy - $Player.gravity
+
+	$HUD.setup(min_buoy, max_buoy, $Player.starting_air)
+
+	for pickup in get_tree().get_nodes_in_group("pickups"):
+		_pickups_total += 1
+		pickup.connect("pickup", self, "_pickup")
+
+	$Player.connect("dead", self, "_on_Player_dead")
+	$Player.connect("last_breath", self, "_on_Player_last_breath")
+	$HUD.connect("restart_game", self, "_on_HUD_restart_game")
+	$Sub.connect("player_entered", self, "_on_Sub_entered")
+
+	$Player.start()
+
+
+func _process(_delta):
+	var buoyancy = $Player.buoyancy - $Player.gravity
+	$HUD.set_buoyancy(buoyancy)
+	$HUD.set_air($Player.air)
+	$HUD.set_pickups(_pickups_collected, _pickups_total)
+
+
+func _on_Sub_entered():
+	if _pickups_collected == _pickups_total:
+		$HUD.set_won(true, $Player.get_score())
+		$Player.set_won()
+
+
+func _on_Player_dead():
+	$HUD.set_dead(true)
+
+
+func _on_Player_last_breath(time):
+	$HUD.fade_to_black(time)
+
+
+func _on_HUD_restart_game():
+	get_tree().change_scene("res://Main.tscn")
+
+
+func _on_MainLevel_won():
+	$HUD.set_won($MainLevel.won, $Player.get_score())
+	$Player.set_won()
+
+
+func _pickup():
+	_pickups_collected += 1
+
+
+func find_caves():
+	var empty_cells = map.get_used_cells_by_id(BACKGROUND_LAYER)
 	var caves = []
 	var used = []
 
@@ -74,8 +133,11 @@ func join_caverns():
 					if empty_cells.has(n):
 						to_check.append(n)
 		caves.append(group)
+	return caves
 
-	var player_cave
+
+func join_caves(caves):
+	var player_cave = caves[0]
 	var player_pos = map.world_to_map($Player.position)
 	for cave in caves:
 		if cave.has(player_pos):
@@ -103,49 +165,40 @@ func _rand_element(thing):
 	return thing[_rng.randi_range(0, thing.size() - 1)]
 
 
-func init_level():
-	_rng.seed = level_seed
-	var noise = OpenSimplexNoise.new()
+func spawn_creatures(caves: Array):
+	var empty_cells = map.get_used_cells_by_id(BACKGROUND_LAYER)
+	var big_caves = []
 
-	noise.seed = level_seed
-	noise.octaves = 4
-	noise.period = 20
-	noise.persistence = 0.8
+	for cave in caves:
+		if cave.size() > 30:
+			big_caves.append(cave)
 
-	var map = $Navigation2D/TileMap
-	var map_size = Vector2(80, 40)
-	var map_extents = map.cell_size * map_size
+	var cave = _rand_element(big_caves)
+	var ocupied = []
+	var pos = _rand_element(cave)
+	for i in range(0, empty_cells.size() / 50):
+		var has_room = false
+		while ocupied.has(pos) or not has_room:
+			pos = _rand_element(empty_cells)
+			has_room = true
+			for to_check in [Vector2.LEFT, Vector2.ZERO, Vector2.RIGHT]:
+				if not empty_cells.has(pos + to_check):
+					has_room = false
 
-	print(map_extents)
+		var puff = _puffer.instance()
 
-	$Player.set_camera_extents(0, 0, map_extents.x, map_extents.y)
+		var offset = Vector2($TileMap.cell_size.x / 2, $TileMap.cell_size.y / 2)
+		puff.position = map.map_to_world(pos) + offset
+		puff.add_to_group("enemies")
+		ocupied.append(pos)
+		map.add_child(puff)
 
-	map.clear()
-	for x in range(0, map_size.x):
-		for y in range(0, map_size.y):
-			var p = Vector2(x, y)
-			var n = noise.get_noise_2dv(p)
-			map.set_cellv(p, 1 if n > 0 else 2)
 
-	for x in range(2, 8):
-		for y in range(2, 8):
-			map.set_cell(x, y, 2)
-
-	for x in range(0, map_size.x):
-		map.set_cell(x, 0, true)
-		map.set_cell(x, map_size.y - 1, true)
-
-	for y in range(0, map_size.y):
-		map.set_cell(0, y, true)
-		map.set_cell(map_size.x - 1, y, true)
-
-	join_caverns()
-
-	var cells = map.get_used_cells_by_id(1)
+func spawn_chests():
 	var from = $Player.position
 	var chest_positions: Array = []
 
-	var empty_cells = map.get_used_cells_by_id(2)
+	var empty_cells = map.get_used_cells_by_id(BACKGROUND_LAYER)
 	var player_pos = map.world_to_map($Player.position)
 
 	var astar = build_astar()
@@ -161,7 +214,7 @@ func init_level():
 				break
 			attempts += 1
 
-			pos = empty_cells[randi() % empty_cells.size()]
+			pos = _rand_element(empty_cells)
 			while empty_cells.has(pos + Vector2.DOWN):
 				pos = pos + Vector2.DOWN
 
@@ -181,13 +234,55 @@ func init_level():
 		new_chest.add_to_group("pickups")
 		map.add_child(new_chest)
 
+
+func init_level():
+	_rng.seed = level_seed
+	var noise = OpenSimplexNoise.new()
+
+	noise.seed = level_seed
+	noise.octaves = 4
+	noise.period = 20
+	noise.persistence = 0.8
+
+	var map_size = Vector2(80, 40)
+	var map_extents = map.cell_size * map_size
+
+	$Player.set_camera_extents(0, 0, map_extents.x, map_extents.y)
+
+	map.clear()
+	for x in range(0, map_size.x):
+		for y in range(0, map_size.y):
+			var p = Vector2(x, y)
+			var n = noise.get_noise_2dv(p)
+			var layer_index = FORGROUND_LAYER if n > 0 else BACKGROUND_LAYER
+			map.set_cellv(p, layer_index)
+
+	for x in range(2, 8):
+		for y in range(2, 8):
+			map.set_cell(x, y, 2)
+
+	for x in range(0, map_size.x):
+		map.set_cell(x, 0, true)
+		map.set_cell(x, map_size.y - 1, true)
+
+	for y in range(0, map_size.y):
+		map.set_cell(0, y, true)
+		map.set_cell(map_size.x - 1, y, true)
+
+	var caves = find_caves()
+	join_caves(caves)
+
+	var cells = map.get_used_cells_by_id(FORGROUND_LAYER)
+
+	spawn_chests()
+	spawn_creatures(caves)
+
 	map.update_dirty_quadrants()
 	map.update_bitmask_region()
 
 
 func clear_path(path: Array):
-	var map = $Navigation2D/TileMap
-	var empty_cells = map.get_used_cells_by_id(2)
+	var empty_cells = map.get_used_cells_by_id(BACKGROUND_LAYER)
 
 	for p in path:
 		var up = p + Vector2.UP
@@ -200,7 +295,7 @@ func draw_map_path(path: Array):
 	var new_line = Line2D.new()
 	var points = []
 	for p in path:
-		points.append($Navigation2D/TileMap.map_to_world(p))
+		points.append($TileMap.map_to_world(p))
 	new_line.points = points
 	new_line.width = 3
 	self.add_child(new_line)

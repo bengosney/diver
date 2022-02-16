@@ -11,7 +11,7 @@ export(float, 0, 1.0) var friction = 0.01
 export(float, 0, 1.0) var acceleration = 0.025
 export(float, 0, 1.0) var buoyancy_acc = 0.25
 export(float, 0, 1.0) var air_step = .1
-export(int) var starting_air = 100
+export(int) var starting_air = 200
 export(float) var breath = 0.1
 export(float) var leek_factor = 0.25
 export(float) var hit_timeout = 0.25
@@ -31,12 +31,12 @@ var min_buoy = gravity * (1 - (minmax * 2))
 var buoyancy_step = (max_buoy - min_buoy) / 15
 var buoyancy = gravity - (buoyancy_step * 2)
 
-var air = starting_air
-
 var can_be_hit = true
 var leaks = []
 var is_dead = false
 var _has_won = false
+
+onready var air = starting_air
 
 
 func _ready():
@@ -49,6 +49,10 @@ func _ready():
 	$Light2D.enabled = has_light
 
 	get_tree().get_root().connect("size_changed", self, "set_camera_zoom")
+
+
+func start():
+	air = starting_air
 
 
 func set_won():
