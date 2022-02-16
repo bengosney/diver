@@ -46,23 +46,18 @@ position = Vector2( 240, 128 )
 
 [node name="Chest" parent="PickUps" instance=ExtResource( 5 )]
 position = Vector2( 50, 376 )
-scale = Vector2( 0.5, 0.5 )
 
 [node name="Chest2" parent="PickUps" instance=ExtResource( 5 )]
 position = Vector2( 58, 124 )
-scale = Vector2( 0.5, 0.5 )
 
 [node name="Chest3" parent="PickUps" instance=ExtResource( 5 )]
 position = Vector2( 147, 251 )
-scale = Vector2( 0.5, 0.5 )
 
 [node name="Chest4" parent="PickUps" instance=ExtResource( 5 )]
 position = Vector2( 974, 218 )
-scale = Vector2( 0.5, 0.5 )
 
 [node name="Chest5" parent="PickUps" instance=ExtResource( 5 )]
 position = Vector2( 1482, 568 )
-scale = Vector2( 0.5, 0.5 )
 
 [node name="Enemies" type="Node2D" parent="."]
 

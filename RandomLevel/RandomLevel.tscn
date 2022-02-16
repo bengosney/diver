@@ -1,0 +1,27 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://MainLevel/MainLevel.tres" type="TileSet" id=1]
+[ext_resource path="res://RandomLevel/RandomLevel.gd" type="Script" id=2]
+[ext_resource path="res://Player/Player.tscn" type="PackedScene" id=3]
+[ext_resource path="res://MainLevel/Background.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Sub/Sub.tscn" type="PackedScene" id=5]
+[ext_resource path="res://HUD/HUD.tscn" type="PackedScene" id=6]
+
+[node name="RandomLevel" type="Node2D"]
+script = ExtResource( 2 )
+
+[node name="TileMap" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 32, 32 )
+format = 1
+tile_data = PoolIntArray( 327685, 3, 0, 327686, 3, 0, 327687, 3, 0, 327688, 3, 0, 327691, 3, 0, 327692, 3, 0, 393218, 3, 0, 393219, 3, 0, 393220, 3, 0, 393221, 3, 0, 393222, 3, 65536, 393223, 3, 131072, 393224, 3, 0, 393225, 3, 0, 393226, 3, 0, 393227, 3, 0, 393228, 3, 0, 393229, 3, 0, 393230, 3, 0, 393231, 3, 0, 458754, 1, 131076, 458755, 1, 262145, 458756, 1, 262145, 458757, 1, 262145, 458758, 1, 262145, 458759, 1, 262145, 458760, 1, 262145, 458761, 1, 262145, 458762, 1, 262145, 458763, 1, 262145, 458764, 1, 262145, 458765, 1, 262145, 458766, 1, 262145, 458767, 1, 262145, 458768, 1, 262148, 655361, 3, 0, 720905, 3, 65536, 720906, 3, 65536, 720907, 3, 65538, 720908, 3, 65538, 720916, 3, 0, 720917, 3, 0, 786451, 3, 0 )
+
+[node name="ParallaxBackground" parent="TileMap" instance=ExtResource( 4 )]
+
+[node name="Sub" parent="." instance=ExtResource( 5 )]
+position = Vector2( 167, 96 )
+
+[node name="Player" parent="." instance=ExtResource( 3 )]
+position = Vector2( 171, 94 )
+
+[node name="HUD" parent="." instance=ExtResource( 6 )]
