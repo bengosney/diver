@@ -23,5 +23,6 @@ position = Vector2( 167, 96 )
 
 [node name="Player" parent="." instance=ExtResource( 3 )]
 position = Vector2( 171, 94 )
+zoom = 2.5
 
 [node name="HUD" parent="." instance=ExtResource( 6 )]

@@ -5,11 +5,13 @@ const FORGROUND_LAYER = 1
 
 export(int) var level_seed = 1
 export(int) var chest_count = 10
+export(int) var cave_size = 30
 
 var _rng = RandomNumberGenerator.new()
 var _chest = preload("res://Chest/Chest.tscn")
 var _spawner = preload("res://Swarm/Swarm.tscn")
 var _puffer = preload("res://Puffer/Puffer.tscn")
+var _jelly = preload("res://Jellyfish/Jellyfish.tscn")
 
 var _pickups_total = 0
 var _pickups_collected = 0
@@ -145,7 +147,7 @@ func join_caves(caves):
 			break
 
 	for cave in caves:
-		if cave.size() < 30 or cave == player_cave:
+		if cave.size() <= cave_size or cave == player_cave:
 			continue
 
 		var from = _rand_element(player_cave)
@@ -166,17 +168,37 @@ func _rand_element(thing):
 
 
 func spawn_creatures(caves: Array):
+	var tile_offset = Vector2($TileMap.cell_size.x / 2, $TileMap.cell_size.y / 2)
 	var empty_cells = map.get_used_cells_by_id(BACKGROUND_LAYER)
 	var big_caves = []
+	var player_pos = map.world_to_map($Player.position)
 
 	for cave in caves:
-		if cave.size() > 30:
+		if cave.size() >= cave_size and not cave.has(player_pos):
 			big_caves.append(cave)
 
-	var cave = _rand_element(big_caves)
 	var ocupied = []
-	var pos = _rand_element(cave)
-	for i in range(0, empty_cells.size() / 50):
+
+	"""
+	var cave = _rand_element(big_caves)
+	for i in range(0, cave.size() / 5):
+		var pos = _rand_element(cave)
+		while ocupied.has(pos):
+			pos = _rand_element(cave)
+
+		var jelly = _jelly.instance()
+		jelly.position = map.map_to_world(pos)
+		jelly.add_to_group("enemies")
+		ocupied.append(pos)
+		map.add_child(jelly)
+	"""
+
+	var puffer_spawns = []
+	for cave in big_caves:
+		puffer_spawns.append_array(cave)
+
+	for i in range(0, puffer_spawns.size() * 0.025):
+		var pos = _rand_element(puffer_spawns)
 		var has_room = false
 		while ocupied.has(pos) or not has_room:
 			pos = _rand_element(empty_cells)
@@ -186,9 +208,7 @@ func spawn_creatures(caves: Array):
 					has_room = false
 
 		var puff = _puffer.instance()
-
-		var offset = Vector2($TileMap.cell_size.x / 2, $TileMap.cell_size.y / 2)
-		puff.position = map.map_to_world(pos) + offset
+		puff.position = map.map_to_world(pos) + tile_offset
 		puff.add_to_group("enemies")
 		ocupied.append(pos)
 		map.add_child(puff)
