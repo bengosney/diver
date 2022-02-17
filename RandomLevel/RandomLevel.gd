@@ -3,13 +3,26 @@ extends Node2D
 const BACKGROUND_LAYER = 2
 const FORGROUND_LAYER = 1
 
+const ADJACENT = [
+	Vector2.UP,
+	Vector2.RIGHT,
+	Vector2.DOWN,
+	Vector2.LEFT,
+	Vector2.UP + Vector2.RIGHT,
+	Vector2.UP + Vector2.LEFT,
+	Vector2.DOWN + Vector2.RIGHT,
+	Vector2.DOWN + Vector2.LEFT,
+]
+
 export(int) var level_seed = 1
 export(int) var chest_count = 10
+export(int) var cave_size = 25
 
 var _rng = RandomNumberGenerator.new()
 var _chest = preload("res://Chest/Chest.tscn")
-var _spawner = preload("res://Swarm/Swarm.tscn")
+var _swarm = preload("res://Swarm/Swarm.tscn")
 var _puffer = preload("res://Puffer/Puffer.tscn")
+var _jelly = preload("res://Jellyfish/Jellyfish.tscn")
 
 var _pickups_total = 0
 var _pickups_collected = 0
@@ -145,7 +158,7 @@ func join_caves(caves):
 			break
 
 	for cave in caves:
-		if cave.size() < 30 or cave == player_cave:
+		if cave.size() <= cave_size or cave == player_cave:
 			continue
 
 		var from = _rand_element(player_cave)
@@ -166,32 +179,63 @@ func _rand_element(thing):
 
 
 func spawn_creatures(caves: Array):
-	var empty_cells = map.get_used_cells_by_id(BACKGROUND_LAYER)
+	var tile_offset = Vector2($TileMap.cell_size.x / 2, $TileMap.cell_size.y / 2)
+	var empty_cells = []  #map.get_used_cells_by_id(BACKGROUND_LAYER)
 	var big_caves = []
+	var player_pos = map.world_to_map($Player.position)
+	var cave_cells = []
+	var biggest_cave = []
 
 	for cave in caves:
-		if cave.size() > 30:
+		empty_cells.append_array(cave)
+		if cave.size() > cave_size:
+			cave_cells.append_array(cave)
 			big_caves.append(cave)
 
-	var cave = _rand_element(big_caves)
 	var ocupied = []
-	var pos = _rand_element(cave)
-	for i in range(0, empty_cells.size() / 50):
+
+	var puffer_spawns = []
+	for cell in empty_cells:
+		if cell.distance_to(player_pos) > 5:
+			puffer_spawns.append(cell)
+
+	for i in range(0, puffer_spawns.size() * 0.025):
+		var pos = _rand_element(puffer_spawns)
 		var has_room = false
 		while ocupied.has(pos) or not has_room:
-			pos = _rand_element(empty_cells)
+			pos = _rand_element(puffer_spawns)
 			has_room = true
 			for to_check in [Vector2.LEFT, Vector2.ZERO, Vector2.RIGHT]:
 				if not empty_cells.has(pos + to_check):
 					has_room = false
 
 		var puff = _puffer.instance()
-
-		var offset = Vector2($TileMap.cell_size.x / 2, $TileMap.cell_size.y / 2)
-		puff.position = map.map_to_world(pos) + offset
+		puff.position = map.map_to_world(pos) + tile_offset
 		puff.add_to_group("enemies")
 		ocupied.append(pos)
 		map.add_child(puff)
+
+	var jelly_cells = []
+	for cell in cave_cells:
+		if cell.distance_to(player_pos) > 5:
+			jelly_cells.append(cell)
+
+	for i in range(0, jelly_cells.size() / 150):
+		var center = _rand_element(jelly_cells)
+		var can_spawn_on = [center]
+		for o in ADJACENT:
+			if empty_cells.has(center + o):
+				can_spawn_on.append(center + o)
+
+		for j in range(0, can_spawn_on.size() * 2):
+			var jelly = _jelly.instance()
+			var rnd_offset = Vector2(
+				_rng.randi_range(0, map.cell_size.x), _rng.randi_range(0, map.cell_size.y)
+			)
+			jelly.position = map.map_to_world(_rand_element(can_spawn_on)) + rnd_offset
+			jelly.size_scale = _rng.randf_range(0.2, 1)
+			jelly.add_to_group("enemies")
+			map.add_child(jelly)
 
 
 func spawn_chests():
