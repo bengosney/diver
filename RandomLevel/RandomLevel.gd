@@ -3,6 +3,8 @@ extends Node2D
 const BACKGROUND_LAYER = 2
 const FORGROUND_LAYER = 1
 
+const ENEMEY_GROUP = "enemies"
+
 const ADJACENT = [
 	Vector2.UP,
 	Vector2.RIGHT,
@@ -23,6 +25,7 @@ var _chest = preload("res://Chest/Chest.tscn")
 var _swarm = preload("res://Swarm/Swarm.tscn")
 var _puffer = preload("res://Puffer/Puffer.tscn")
 var _jelly = preload("res://Jellyfish/Jellyfish.tscn")
+var _crab = preload("res://Crab/Crab.tscn")
 
 var _pickups_total = 0
 var _pickups_collected = 0
@@ -68,6 +71,9 @@ func build_astar():
 
 
 func _ready():
+	var r = RandomNumberGenerator.new()
+	r.randomize()
+	level_seed = r.randi()
 	init_level()
 
 	$Player.starting_air = map.get_used_cells_by_id(BACKGROUND_LAYER).size() * 0.15
@@ -211,7 +217,7 @@ func spawn_creatures(caves: Array):
 
 		var puff = _puffer.instance()
 		puff.position = map.map_to_world(pos) + tile_offset
-		puff.add_to_group("enemies")
+		puff.add_to_group(ENEMEY_GROUP)
 		ocupied.append(pos)
 		map.add_child(puff)
 
@@ -234,8 +240,67 @@ func spawn_creatures(caves: Array):
 			)
 			jelly.position = map.map_to_world(_rand_element(can_spawn_on)) + rnd_offset
 			jelly.size_scale = _rng.randf_range(0.2, 1)
-			jelly.add_to_group("enemies")
+			jelly.add_to_group(ENEMEY_GROUP)
 			map.add_child(jelly)
+
+	## craby
+	var floor_cells = []
+	var checked = []
+	empty_cells = map.get_used_cells_by_id(BACKGROUND_LAYER)
+	for cell in empty_cells:
+		if checked.has(cell):
+			continue
+		checked.append(cell)
+		if empty_cells.has(cell + Vector2.DOWN):
+			continue
+		floor_cells.append(cell)
+
+	checked = []
+	for cell in floor_cells:
+		if checked.has(cell):
+			continue
+		checked.append(cell)
+
+		var floor_line = [cell]
+
+		var next = cell
+		while true:
+			next += Vector2.RIGHT
+			if !floor_cells.has(next) or checked.has(next):
+				break
+			floor_line.append(next)
+			checked.append(next)
+
+		next = cell
+		while true:
+			next += Vector2.LEFT
+			if !floor_cells.has(next) or checked.has(next):
+				break
+			floor_line.append(next)
+			checked.append(next)
+
+		checked.append(cell)
+
+		if floor_line.size() >= 4:
+			for floor_cell in floor_line:
+				if (
+					!empty_cells.has(floor_cell + Vector2.UP)
+					or !empty_cells.has(floor_cell + Vector2.UP + Vector2.UP)
+				):
+					break
+			var crabby = _crab.instance()
+			crabby.start_on_floor = false
+			crabby.position = map.map_to_world(_rand_element(floor_line)) + Vector2.UP
+			crabby.add_to_group(ENEMEY_GROUP)
+			map.add_child(crabby)
+
+
+func draw_cell(cell, colour):
+	var rect = ColorRect.new()
+	rect.rect_size = map.cell_size
+	rect.color = colour
+	rect.rect_position = map.map_to_world(cell)
+	map.add_child(rect)
 
 
 func spawn_chests():
