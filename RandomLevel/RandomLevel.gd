@@ -73,7 +73,7 @@ func build_astar():
 func _ready():
 	var r = RandomNumberGenerator.new()
 	r.randomize()
-	level_seed = r.randi()
+	#level_seed = r.randi()
 	init_level()
 
 	$Player.starting_air = map.get_used_cells_by_id(BACKGROUND_LAYER).size() * 0.15
