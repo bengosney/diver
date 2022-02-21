@@ -3,7 +3,12 @@ extends CanvasLayer
 signal start_game
 
 
+func _ready():
+	$VBoxContainer/TextEdit.text = str(Global.get_seed())
+
+
 func _on_Button_pressed():
+	Global.set_seed($VBoxContainer/TextEdit.text)
 	emit_signal("start_game")
 
 
