@@ -41,4 +41,8 @@ playing = true
 process_mode = 0
 autostart = true
 
+[node name="Area2D" type="Area2D" parent="."]
+
 [connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
+[connection signal="body_entered" from="Area2D" to="." method="_on_Area2D_body_entered"]
+[connection signal="body_exited" from="Area2D" to="." method="_on_Area2D_body_exited"]

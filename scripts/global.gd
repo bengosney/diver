@@ -11,6 +11,6 @@ func get_seed():
 	if !_seed:
 		var r = RandomNumberGenerator.new()
 		r.randomize()
-		return r.randi()
+		_seed = r.randi()
 
 	return _seed

@@ -36,6 +36,8 @@ var leaks = []
 var is_dead = false
 var _has_won = false
 
+var _slowed = 0
+
 onready var air = starting_air
 
 
@@ -49,6 +51,10 @@ func _ready():
 	$Light2D.enabled = has_light
 
 	get_tree().get_root().connect("size_changed", self, "set_camera_zoom")
+
+
+func slow(by):
+	_slowed += by
 
 
 func start():
@@ -92,6 +98,10 @@ func get_input():
 		velocity.x = lerp(velocity.x, dir * speed, acceleration)
 	else:
 		velocity.x = lerp(velocity.x, 0, friction)
+
+	if _slowed > 0:
+		velocity.x = lerp(velocity.x, 0, friction * _slowed)
+		velocity.y = lerp(velocity.y, 0, friction * _slowed)
 
 	var buoy = 0
 	if Input.is_action_pressed("buoyancy_inc"):
@@ -160,9 +170,8 @@ func _physics_process(delta):
 			velocity = velocity + (dir * 25)
 
 		if collision.collider.is_in_group("enemies"):
-			#if collision.collider.damage > 0:
-			#print("hit enemy")
-			pass
+			if collision.collider.damage > 0:
+				print("hit enemy")
 
 
 func _on_MainLevel_hit_player(collision, dammage):
