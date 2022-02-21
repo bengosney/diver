@@ -1,8 +1,11 @@
 extends Node2D
 
+const RANDOM_LEVEL = "res://RandomLevel/RandomLevel.tscn"
+
 
 func start_game():
-	get_tree().change_scene("res://RandomLevel/RandomLevel.tscn")
+	get_tree().change_scene(RANDOM_LEVEL)
+	#get_tree().change_scene("res://RandomLevel/RandomLevel.tscn")
 	#get_tree().change_scene("res://MainLevel/PlayableLevel.tscn")
 
 
@@ -16,5 +19,5 @@ func _input(event):
 
 
 func _ready():
-	#get_tree().change_scene("res://RandomLevel/RandomLevel.tscn")
+	#start_game()
 	pass
