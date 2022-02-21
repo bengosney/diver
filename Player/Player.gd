@@ -169,9 +169,9 @@ func _physics_process(delta):
 			var dir = -position.direction_to(collision.collider.position).normalized()
 			velocity = velocity + (dir * 25)
 
-		if collision.collider.is_in_group("enemies"):
-			if collision.collider.damage > 0:
-				print("hit enemy")
+		#if collision.collider.is_in_group("enemies"):
+		#	if collision.collider.damage > 0 || false:
+		#		print("hit enemy")
 
 
 func _on_MainLevel_hit_player(collision, dammage):

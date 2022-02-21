@@ -4,7 +4,6 @@ const RANDOM_LEVEL = "res://RandomLevel/RandomLevel.tscn"
 
 
 func start_game():
-	Global.set_seed(3751161678)
 	get_tree().change_scene(RANDOM_LEVEL)
 
 

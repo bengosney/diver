@@ -19,39 +19,6 @@ extents = Vector2( 17, 292.5 )
 [node name="TitleScreen" type="CanvasLayer"]
 script = ExtResource( 10 )
 
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
-anchor_left = 0.5
-anchor_right = 0.5
-anchor_bottom = 1.0
-margin_left = -33.0
-margin_right = 33.0
-alignment = 1
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="RichTextLabel" type="RichTextLabel" parent="VBoxContainer"]
-light_mask = 0
-margin_top = 268.0
-margin_right = 66.0
-margin_bottom = 295.0
-theme = ExtResource( 1 )
-bbcode_enabled = true
-bbcode_text = "[center]Diver[/center]"
-text = "Diver"
-fit_content_height = true
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Button" type="Button" parent="VBoxContainer"]
-light_mask = 0
-margin_top = 299.0
-margin_right = 66.0
-margin_bottom = 331.0
-theme = ExtResource( 1 )
-text = "Start"
-
 [node name="Camera2D" type="Camera2D" parent="."]
 current = true
 editor_draw_limits = true
@@ -114,5 +81,47 @@ shape = SubResource( 2 )
 [node name="CollisionShape2D5" type="CollisionShape2D" parent="Node2D/TileMap/StaticBody2D"]
 position = Vector2( 1020, 285 )
 shape = SubResource( 2 )
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+anchor_left = 0.5
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -72.0
+margin_right = 92.0
+alignment = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="RichTextLabel" type="RichTextLabel" parent="VBoxContainer"]
+light_mask = 0
+margin_top = 250.0
+margin_right = 164.0
+margin_bottom = 277.0
+theme = ExtResource( 1 )
+bbcode_enabled = true
+bbcode_text = "[center]Diver[/center]"
+text = "Diver"
+fit_content_height = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextEdit" type="TextEdit" parent="VBoxContainer"]
+margin_top = 281.0
+margin_right = 164.0
+margin_bottom = 313.0
+rect_min_size = Vector2( 0, 32 )
+size_flags_vertical = 0
+text = "random seed"
+caret_blink = true
+
+[node name="Button" type="Button" parent="VBoxContainer"]
+light_mask = 0
+margin_top = 317.0
+margin_right = 164.0
+margin_bottom = 349.0
+theme = ExtResource( 1 )
+text = "Start"
 
 [connection signal="pressed" from="VBoxContainer/Button" to="." method="_on_Button_pressed"]
