@@ -10,17 +10,22 @@ var starting_position = Vector2.ZERO
 
 var damage = 1
 
+onready var _rng = RandomNumberGenerator.new()
+
 
 func _ready():
 	starting_position = position
 	var s = 0.5 * size_scale
 	$body.scale = Vector2(s, s)
 	$AnimatedSprite.scale = Vector2(s, s)
+	var area_body = $body.duplicate(DUPLICATE_USE_INSTANCING)
+	$Area2D.add_child(area_body)
 	randomise_timeout()
 
 
 func randomise_timeout():
-	$Timer.wait_time = rand_range(0.5, 1.5)
+	_rng.randomize()
+	$Timer.wait_time = _rng.randf_range(0.5, 1.5)
 
 
 func _on_Timer_timeout():
@@ -31,9 +36,11 @@ func _on_Timer_timeout():
 		apply_central_impulse(dir)
 
 
-func _physics_process(_delta):
-	var colliders = self.get_colliding_bodies()
-	if len(colliders) > 0:
-		for collider in colliders:
-			if collider.is_in_group("player"):
-				emit_signal("hit_player", self, damage)
+func _on_Area2D_body_entered(body):
+	if body.is_in_group("player"):
+		body.slow(1)
+
+
+func _on_Area2D_body_exited(body):
+	if body.is_in_group("player"):
+		body.slow(-1)
