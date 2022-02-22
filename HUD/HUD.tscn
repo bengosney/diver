@@ -107,5 +107,16 @@ margin_bottom = 331.0
 theme = ExtResource( 3 )
 text = "Try Again"
 
+[node name="SeedLabel" type="RichTextLabel" parent="."]
+anchor_right = 1.0
+theme = ExtResource( 3 )
+bbcode_enabled = true
+bbcode_text = "[center]Seed: [/center]"
+text = "Seed: "
+fit_content_height = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [connection signal="timeout" from="ColorRect/FadeToBlack" to="." method="_on_FadeToBlack_timeout"]
 [connection signal="pressed" from="GameOver/TryAgain" to="." method="_on_TryAgain_pressed"]
