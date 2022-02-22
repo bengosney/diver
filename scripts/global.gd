@@ -9,9 +9,6 @@ func set_seed(new_seed):
 
 func get_seed():
 	if !_seed:
-		print("rng")
-		var r = RandomNumberGenerator.new()
-		r.randomize()
-		_seed = r.randi()
+		_seed = hash(OS.get_date())
 
 	return _seed

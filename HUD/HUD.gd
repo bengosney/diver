@@ -3,6 +3,10 @@ extends CanvasLayer
 signal restart_game
 
 
+func _ready():
+	$SeedLabel.bbcode_text = "[center]Seed: " + str(Global.get_seed()) + "[/center]"
+
+
 func set_buoyancy(buoyancy):
 	$GaugeContainer/Buoyancy.set_value(buoyancy)
 
