@@ -111,7 +111,7 @@ func get_input():
 
 	$BuoyancyBubbles.emitting = (buoy == -1 && air > 0)
 
-	if buoy != 0 and air > 0:
+	if (air > 0 and buoy > 0) or buoy < 0:
 		var target = buoyancy + (buoy * buoyancy_step)
 		if target > buoyancy:
 			air = air - air_step
@@ -122,6 +122,7 @@ func get_input():
 func breath(delta):
 	var used = breath * delta
 	if used > air:
+		used *= 10
 		buoyancy = max(0, buoyancy - (used - air))
 	air = max(0, air - used)
 
